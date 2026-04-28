@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Coverage Snapshot | KnowWithJuno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* Juno brand — deep teal + warm cream + coral accent */
+    --teal:        #0D6B6E;
+    --teal-d:      #094B4D;
+    --teal-lt:     #E6F4F4;
+    --teal-mid:    #1A8A8D;
+    --coral:       #E85D3A;
+    --coral-d:     #C44728;
+    --coral-lt:    #FDF0EC;
+    --cream:       #FAF7F2;
+    --cream-d:     #F0EBE1;
+    --ink:         #1A1A2E;
+    --ink-2:       #2D2D44;
+    --soft:        #6B7280;
+    --border:      #E2DDD6;
+    --white:       #FFFFFF;
+    --gap-red:     #C0392B;
+    --gap-red-lt:  #FDECEA;
+    --good-green:  #1A7A4A;
+    --good-lt:     #E8F5EE;
+    --note-gold:   #92650A;
+    --note-gold-lt:#FEF7E6;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── URGENCY BAR ── */
+  .urgency-bar {
+    background: var(--teal-d);
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+    padding: 11px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .urgency-bar strong { color: #7ECACB; font-weight: 700; }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  }
+  .logo {
+    font-family: 'Sora', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--teal);
+    letter-spacing: -0.04em;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .logo-dot { color: var(--coral); }
+  .logo-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    background: var(--teal-lt);
+    color: var(--teal);
+    padding: 3px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+  }
+  .nav-right {
+    font-size: 12px;
+    color: var(--soft);
+    font-weight: 500;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--white);
+    padding: 52px 24px 44px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-inner { max-width: 640px; margin: 0 auto; }
+  .hero-pill {
+    display: inline-block;
+    background: var(--teal-lt);
+    color: var(--teal);
+    font-family: 'Sora', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 6vw, 44px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--coral);
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--soft);
+    max-width: 460px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+
+  /* ── ADVISOR NOTE ── */
+  .advisor-note {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 22px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    text-align: left;
+    margin-top: 8px;
+  }
+  .advisor-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), var(--teal-mid));
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    color: #fff;
+    border: 2px solid var(--teal-lt);
+    overflow: hidden;
+  }
+  .advisor-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .advisor-from {
+    font-family: 'Sora', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 5px;
+  }
+  .advisor-note p {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 36px 20px 60px;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Sora', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 20px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 16px;
+    background: var(--coral);
+    border-radius: 2px;
+  }
+
+  /* ── BENEFIT CARDS ── */
+  .benefit-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .benefit-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); }
+
+  .benefit-card-header {
+    padding: 20px 22px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .benefit-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .benefit-icon.teal   { background: var(--teal-lt); }
+  .benefit-icon.coral  { background: var(--coral-lt); }
+  .benefit-icon.gold   { background: var(--note-gold-lt); }
+  .benefit-icon.green  { background: var(--good-lt); }
+
+  .benefit-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+  .benefit-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .badge-gap   { background: var(--gap-red-lt); color: var(--gap-red); }
+  .badge-have  { background: var(--good-lt); color: var(--good-green); }
+  .badge-addon { background: var(--note-gold-lt); color: var(--note-gold); }
+
+  .benefit-desc {
+    padding: 0 22px 16px;
+    font-size: 14px;
+    color: var(--soft);
+    line-height: 1.7;
+  }
+  .benefit-desc strong { color: var(--ink); font-weight: 600; }
+
+  /* illness cost pills */
+  .illness-pills {
+    padding: 0 22px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .illness-pill {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .illness-pill-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .illness-pill-cost {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gap-red);
+  }
+
+  /* coverage amount box */
+  .coverage-box {
+    margin: 0 22px 20px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .coverage-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+  }
+  .coverage-row + .coverage-row {
+    border-top: 1px dashed var(--border);
+  }
+  .coverage-row-label {
+    font-size: 13px;
+    color: var(--soft);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .coverage-row-value {
+    font-family: 'Sora', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--teal);
+  }
+  .coverage-row-value.starter { color: var(--coral); }
+  .coverage-row-note {
+    font-size: 11px;
+    color: var(--soft);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* waiver checklist */
+  .waiver-checks {
+    padding: 0 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .waiver-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .check-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--good-lt);
+    color: var(--good-green);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── CTA BLOCK ── */
+  .cta-block {
+    background: linear-gradient(135deg, var(--teal-d) 0%, var(--teal) 100%);
+    border-radius: 24px;
+    padding: 40px 28px;
+    text-align: center;
+    margin: 36px 0 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-block::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .cta-block::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -30px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .cta-timer {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 20px;
+  }
+  .cta-block h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .cta-block p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    max-width: 420px;
+    margin: 0 auto 24px;
+    line-height: 1.7;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--coral);
+    color: #fff;
+    font-family: 'Sora', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 16px 36px;
+    border-radius: 50px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background 0.15s, transform 0.15s;
+    position: relative;
+    letter-spacing: -0.01em;
+  }
+  .cta-btn:hover { background: var(--coral-d); transform: translateY(-2px); }
+  .cta-trust {
+    margin-top: 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .cta-trust span { display: flex; align-items: center; gap: 4px; }
+
+  /* ── SOCIAL PROOF ── */
+  .social-proof {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 22px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .stars {
+    color: #F59E0B;
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .social-proof-text {
+    font-size: 13px;
+    color: var(--soft);
+  }
+  .social-proof-text strong { color: var(--teal); }
+  .social-proof-quote {
+    font-size: 13px;
+    color: var(--ink-2);
+    font-style: italic;
+    margin-top: 4px;
+  }
+  .avatars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 12px 0 6px;
+    gap: 0;
+  }
+  .avatar-bubble {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    margin-left: -6px;
+    background: linear-gradient(135deg, var(--teal-lt), var(--teal-mid));
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .avatar-bubble:first-child { margin-left: 0; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    line-height: 1.9;
+  }
+  .footer strong { color: rgba(255,255,255,0.85); }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    font-size: 11px;
+    color: #AAA;
+    text-align: center;
+    line-height: 1.7;
+    max-width: 540px;
+    margin: 0 auto 32px;
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 36px 18px 32px; }
+    .advisor-note { flex-direction: column; gap: 10px; }
+    .main { padding: 28px 16px 48px; }
+    .cta-block { padding: 32px 20px; }
+    .benefit-card-header { padding: 16px 18px 12px; }
+    .benefit-desc, .illness-pills, .coverage-box, .waiver-checks { padding-left: 18px; padding-right: 18px; }
+    .coverage-box { margin-left: 18px; margin-right: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- URGENCY BAR -->
+<div class="urgency-bar">
+  ⏰ <strong>Your Coverage Snapshot is reserved for 48 hours</strong> — Book your Clarity Session before it expires
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="logo" href="#">
+    KnowWith<span class="logo-dot">Juno</span>
+    <span class="logo-badge">FWD Philippines</span>
+  </a>
+  <div class="nav-right">Your Coverage Snapshot</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-pill">Coverage Snapshot</div>
+    <h1>Your personalized insurance<br>needs, <em id="client-name">there</em>.</h1>
+    <p class="hero-sub">Based on your Coverage Test answers — here are the benefits your plan should include, and by how much.</p>
+
+    <!-- Advisor note -->
+    <div class="advisor-note">
+      <div class="advisor-avatar" id="advisor-avatar">JR</div>
+      <div>
+        <div class="advisor-from">From Juno — Your Coverage Advisor</div>
+        <p id="advisor-intro">Based on what you shared, I put together this snapshot for you. It shows exactly where your protection stands — and where you might have gaps worth addressing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <div class="section-label">Your Insurance Benefits</div>
+
+  <!-- Cards injected by JS -->
+  <div id="cards-container"></div>
+
+  <!-- CTA BLOCK -->
+  <div class="cta-block">
+    <div class="cta-timer">⏰ Results available for 48 hours</div>
+    <h2>See exactly how these numbers<br>translate into a plan — and what it costs</h2>
+    <p>In your free 30-min Clarity Session, I'll walk you through the specific plan options that cover all of this — clear, no jargon, no pressure to buy anything.</p>
+    <a class="cta-btn" href="https://calendly.com/junorocillo-pro/30min" target="_blank">👉 Get My Plan Options</a>
+    <div class="cta-trust">
+      <span>✅ 100% Free</span>
+      <span>✅ No obligation</span>
+      <span>✅ Personalized</span>
+    </div>
+  </div>
+
+  <!-- SOCIAL PROOF -->
+  <div class="social-proof">
+    <div class="stars">★★★★★</div>
+    <div class="social-proof-text"><strong>4.9 stars</strong> from 250+ clients</div>
+    <div class="social-proof-quote">"Walang pilitan na nangyari" — Joanna</div>
+    <div class="avatars">
+      <div class="avatar-bubble">KL</div>
+      <div class="avatar-bubble">MR</div>
+      <div class="avatar-bubble">AJ</div>
+      <div class="avatar-bubble">SC</div>
+      <div class="avatar-bubble">+</div>
+    </div>
+    <div class="social-proof-text">Join 300+ clients already protected</div>
+  </div>
+
+  <div class="disclaimer">
+    This snapshot is for informational purposes only and does not constitute a formal financial plan. Coverage amounts are illustrative estimates based on your quiz responses. Actual needs may vary. Consult Juno for a complete financial needs analysis.
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>KnowWithJuno — Powered by FWD Life Insurance Philippines</strong><br>
+  Juno Rocillo · junorocillo.pro@gmail.com<br>
+  © 2025 KnowWithJuno. All rights reserved.
+</div>
+
+<script>
+(function() {
+
+  // ── PARSE URL PARAMS ──────────────────────────────────────────────
+  var params      = new URLSearchParams(window.location.search);
+  var clientName  = params.get("n")   || "there";
+  var incomeKey   = params.get("inc") || "50k";
+  var covRaw      = params.get("cov") || "";
+  var situation   = params.get("sit") || "family";
+
+  // ── CLIENT NAME ───────────────────────────────────────────────────
+  document.getElementById("client-name").textContent = clientName;
+
+  // ── ADVISOR INTRO ─────────────────────────────────────────────────
+  var sitText = situation === "ofw"    ? "an OFW"
+              : situation === "single" ? "a single professional"
+              : situation === "couple" ? "a dual-income household"
+              : "a family breadwinner";
+
+  document.getElementById("advisor-intro").textContent =
+    "Based on what you shared as " + sitText + ", I put together this snapshot for you. " +
+    "It shows exactly where your protection stands — and where you might have gaps worth addressing.";
+
+  // ── INCOME TABLE ──────────────────────────────────────────────────
+  var incomeTable = {
+    "under25k": 20000, "<25k": 20000,
+    "25k": 25000, "25k-35k": 30000, "35k-50k": 42500,
+    "50k": 50000, "50k-75k": 62500,
+    "75k-100k": 87500, "100k+": 120000, "100k": 120000
+  };
+  var monthlyIncome = incomeTable[incomeKey] || incomeTable[(incomeKey||"").toLowerCase()] || 50000;
+  var annualIncome  = monthlyIncome * 12;
+
+  // ── COVERAGE CHECK ────────────────────────────────────────────────
+  var hasList = covRaw ? covRaw.toLowerCase().split(",").map(function(s){ return s.trim(); }) : [];
+  function has(key) {
+    return hasList.some(function(h){ return h.indexOf(key) !== -1; });
+  }
+
+  // ── FORMAT ────────────────────────────────────────────────────────
+  function pesoAbbr(n) {
+    if (n >= 1000000) return "₱" + (n/1000000).toFixed(1) + " million";
+    if (n >= 1000)    return "₱" + Math.round(n/1000) + " thousand";
+    return "₱" + n.toLocaleString();
+  }
+  function pesoFull(n) {
+    return "₱" + n.toLocaleString("en-PH");
+  }
+
+  // ── COMPUTED AMOUNTS ──────────────────────────────────────────────
+  var ciIdeal    = 2000000;
+  var ciStarter  = 1000000;
+  var disIdeal   = annualIncome * 5;
+  var disStarter = annualIncome * 2;
+  var lifeIdeal  = annualIncome * 10;
+  var lifeStart  = annualIncome * 5;
+
+  // ── RENDER HELPERS ────────────────────────────────────────────────
+  var container = document.getElementById("cards-container");
+
+  function el(tag, attrs, inner) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function(k){ e.setAttribute(k, attrs[k]); });
+    if (inner !== undefined) e.innerHTML = inner;
+    return e;
+  }
+
+  function badgeHTML(type, label) {
+    return '<span class="benefit-badge badge-' + type + '">' + label + '</span>';
+  }
+
+  // ── CARD BUILDER ──────────────────────────────────────────────────
+  function buildCard(opts) {
+    /*
+      opts: {
+        icon, iconColor, title, badgeType, badgeLabel,
+        desc,
+        pills: [{name, cost}],
+        coverageRows: [{label, value, isStarter}],
+        coverageNote,
+        checks: [string],
+        hasStatus
+      }
+    */
+    var card = el('div', {class: 'benefit-card'});
+
+    // Header
+    var header = el('div', {class: 'benefit-card-header'});
+    var iconDiv = el('div', {class: 'benefit-icon ' + (opts.iconColor||'teal')}, opts.icon);
+    var titleBlock = el('div', {class: 'flex-col'});
+    var titleEl = el('div', {class: 'benefit-title'}, opts.title);
+    titleBlock.appendChild(titleEl);
+    titleBlock.innerHTML += badgeHTML(opts.badgeType, opts.badgeLabel);
+    header.appendChild(iconDiv);
+    header.appendChild(titleBlock);
+    card.appendChild(header);
+
+    // Description
+    if (opts.desc) {
+      var descDiv = el('div', {class: 'benefit-desc'}, opts.desc);
+      card.appendChild(descDiv);
+    }
+
+    // Illness pills
+    if (opts.pills && opts.pills.length) {
+      var pillsWrap = el('div', {class: 'illness-pills'});
+      opts.pills.forEach(function(p) {
+        var pill = el('div', {class: 'illness-pill'});
+        pill.innerHTML =
+          '<span class="illness-pill-name">' + p.name + '</span>' +
+          '<span class="illness-pill-cost">~' + pesoAbbr(p.cost) + '</span>';
+        pillsWrap.appendChild(pill);
+      });
+      card.appendChild(pillsWrap);
+    }
+
+    // Coverage amount box
+    if (opts.coverageRows && opts.coverageRows.length) {
+      var box = el('div', {class: 'coverage-box'});
+      opts.coverageRows.forEach(function(r, i) {
+        var row = el('div', {class: 'coverage-row'});
+        row.innerHTML =
+          '<span class="coverage-row-label">' + r.label + '</span>' +
+          '<span class="coverage-row-value' + (r.isStarter ? ' starter' : '') + '">' + r.value + '</span>';
+        box.appendChild(row);
+      });
+      if (opts.coverageNote) {
+        var note = el('div', {class: 'coverage-row-note'}, opts.coverageNote);
+        box.appendChild(note);
+      }
+      card.appendChild(box);
+    }
+
+    // Waiver checklist
+    if (opts.checks && opts.checks.length) {
+      var checksWrap = el('div', {class: 'waiver-checks'});
+      opts.checks.forEach(function(c) {
+        var check = el('div', {class: 'waiver-check'});
+        check.innerHTML = '<div class="check-icon">✓</div><span>' + c + '</span>';
+        checksWrap.appendChild(check);
+      });
+      card.appendChild(checksWrap);
+    }
+
+    container.appendChild(card);
+  }
+
+  // ── 1. CRITICAL ILLNESS ───────────────────────────────────────────
+  var hasCI  = has("ci") || has("critical") || has("illness");
+  buildCard({
+    icon: '🏥', iconColor: 'coral',
+    title: 'Critical Illness Coverage',
+    badgeType: hasCI ? 'have' : 'gap',
+    badgeLabel: hasCI ? '✓ You Have This' : '⚠ Gap detected',
+    desc: 'A serious diagnosis doesn\'t just affect your health — it drains your savings fast. <strong>Treatment costs can reach ₱1M to ₱3M+</strong>, and most company or government insurance only covers a fraction of that. This benefit gives you dedicated emergency cash so you can focus on getting better.',
+    pills: [
+      { name: 'Lung Cancer',         cost: 2780000 },
+      { name: 'Stroke',              cost: 1800000 },
+      { name: 'Acute Heart Attack',  cost: 1000000 },
+      { name: 'Breast Cancer',       cost: 450000  },
+      { name: 'Kidney Disease',      cost: 432000  },
+      { name: 'Open Heart Surgery',  cost: 500000  }
+    ],
+    coverageRows: [
+      { label: '💡 Ideal coverage',   value: pesoFull(ciIdeal),   isStarter: false },
+      { label: '🚀 Starter coverage', value: pesoFull(ciStarter), isStarter: true  }
+    ],
+    coverageNote: 'Less any existing critical illness coverage you already have.'
+  });
+
+  // ── 2. DISABILITY / INCOME PROTECTION ────────────────────────────
+  var hasDis = has("disability") || has("income protection") || has("income");
+  buildCard({
+    icon: '💼', iconColor: 'gold',
+    title: 'Disability / Income Protection',
+    badgeType: hasDis ? 'have' : 'gap',
+    badgeLabel: hasDis ? '✓ You Have This' : '⚠ Gap detected',
+    desc: 'If you become unable to work — whether from illness or an accident — <strong>your income stops but your bills don\'t</strong>. Without this, your savings take the full hit. This benefit replaces your income so you can recover without financial pressure piling on top.',
+    coverageRows: [
+      { label: '💡 Ideal coverage',   value: pesoFull(disIdeal),   isStarter: false },
+      { label: '🚀 Starter coverage', value: pesoFull(disStarter), isStarter: true  }
+    ],
+    coverageNote: 'Ideal = 5 years of your monthly expenses. Starter = at least 2 years.'
+  });
+
+  // ── 3. LIFE INSURANCE ─────────────────────────────────────────────
+  var hasLife = has("life");
+  buildCard({
+    icon: '🛡️', iconColor: 'teal',
+    title: 'Life Insurance',
+    badgeType: hasLife ? 'have' : 'addon',
+    badgeLabel: hasLife ? '✓ You Have This' : 'ℹ Good to have',
+    desc: 'Even without dependents, passing away unexpectedly <strong>leaves behind costs that fall on others</strong> — funeral expenses, outstanding loans, final administrative costs. A modest life insurance benefit ensures you don\'t leave that burden behind.',
+    coverageRows: [
+      { label: '💡 Recommended coverage', value: '₱100K – ₱300K', isStarter: false }
+    ],
+    coverageNote: 'Covers funeral services, incidental costs, and minor outstanding obligations. Exact amount discussed during your session.'
+  });
+
+  // ── 4. WAIVER OF PREMIUM ─────────────────────────────────────────
+  var hasWaiver = has("waiver") || has("premium");
+  buildCard({
+    icon: '✅', iconColor: 'green',
+    title: 'Waiver of Premium',
+    badgeType: hasWaiver ? 'have' : 'addon',
+    badgeLabel: hasWaiver ? '✓ You Have This' : 'ℹ Good to have',
+    desc: 'When you need your insurance most — when you\'re sick or can\'t work — <strong>it shouldn\'t become a financial burden</strong>. This benefit ensures your coverage continues even when you can no longer pay for it.',
+    checks: [
+      'Critical illness diagnosis — premiums are fully waived',
+      'Permanent disability — premiums are fully waived',
+      'Coverage continues uninterrupted — no lapses, no gaps',
+      'You focus on recovery. Your plan takes care of itself.'
+    ]
+  });
+
+})();
+</script>
+</body>
+</html>

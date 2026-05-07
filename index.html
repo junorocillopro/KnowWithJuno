@@ -115,11 +115,10 @@
       display: grid;
       grid-template-columns: 56% 44%;
       min-height: 500px;
-      max-height: 580px;
-      align-items: center;
+      align-items: stretch;
     }
     @media(max-width: 860px) {
-      .hero { grid-template-columns: 1fr; max-height: none; }
+      .hero { grid-template-columns: 1fr; }
     }
 
     .hero-left {
@@ -128,6 +127,7 @@
       flex-direction: column;
       justify-content: center;
       background: var(--bg-warm);
+      overflow: hidden;
     }
     @media(max-width: 860px) { .hero-left { padding: 52px 6%; order: 2; } }
 
@@ -244,6 +244,7 @@
       align-items: center;
       justify-content: center;
       padding: 28px 32px 28px 8px;
+      min-height: 500px;
     }
     @media(max-width: 860px) { .hero-right { order: 1; padding: 20px 20px 0; } }
     .hero-photo-frame {

@@ -7,7 +7,7 @@
   <!-- Meta Pixel Code -->
   <script>
   !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?h
   n.callMethod.apply(n,arguments):n.queue.push(arguments)};
   if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
   n.queue=[];t=b.createElement(e);t.async=!0;
@@ -15,7 +15,8 @@
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '2060863387858520');
-  fbq('track', 'PageView');
+  var _pvEid = 'pv_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
+      fbq('track', 'PageView', {}, {eventID: _pvEid});
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
@@ -1937,13 +1938,13 @@
       var reportURL='https://knowwithjuno.com/coverage-report.html?'+reportParams.toString();
 
       // Meta Pixel — track quiz completion as Lead
-      if(typeof fbq==='function'){fbq('track','Lead');}
+      var _leadEid='lead_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);if(typeof fbq==='function'){fbq('track','Lead',{},{eventID:_leadEid});}
 
       fetch("https://hook.eu1.make.com/imm7ejh2x7be7vxsb8y2zpjr6eiuepgj",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({
-          first_name:           fname,
+          fb_event_id:          _leadEid,          first_name:           fname,
           last_name:            lname,
           name:                 fname+" "+lname,
           email:                userEmail,

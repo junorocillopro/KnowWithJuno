@@ -3,830 +3,825 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Coverage Snapshot | KnowWithJuno</title>
+<title>Your Coverage Report | KnowWithJuno</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    /* Juno brand — deep teal + warm cream + coral accent */
-    --teal:        #0D6B6E;
-    --teal-d:      #094B4D;
-    --teal-lt:     #E6F4F4;
-    --teal-mid:    #1A8A8D;
-    --coral:       #E85D3A;
-    --coral-d:     #C44728;
-    --coral-lt:    #FDF0EC;
-    --cream:       #FAF7F2;
-    --cream-d:     #F0EBE1;
-    --ink:         #1A1A2E;
-    --ink-2:       #2D2D44;
-    --soft:        #6B7280;
-    --border:      #E2DDD6;
-    --white:       #FFFFFF;
-    --gap-red:     #C0392B;
-    --gap-red-lt:  #FDECEA;
-    --good-green:  #1A7A4A;
-    --good-lt:     #E8F5EE;
-    --note-gold:   #92650A;
-    --note-gold-lt:#FEF7E6;
+    --orange: #E8500A;
+    --orange-light: #FFF0E8;
+    --navy: #003087;
+    --navy-light: #EEF3FB;
+    --green: #1D8348;
+    --green-light: #EAFAF1;
+    --yellow: #B7770D;
+    --yellow-light: #FEF9E7;
+    --gray: #6B7280;
+    --gray-light: #F9FAFB;
+    --border: #E5E7EB;
+    --text: #111827;
+    --text-soft: #4B5563;
   }
-
-  html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background: #F3F4F6;
+    color: var(--text);
     line-height: 1.6;
     min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
   }
 
-  /* ── URGENCY BAR ── */
-  .urgency-bar {
-    background: var(--teal-d);
-    color: rgba(255,255,255,0.9);
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--orange);
+    color: #fff;
     text-align: center;
-    padding: 11px 20px;
+    padding: 10px 20px;
     font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
   }
-  .urgency-bar strong { color: #7ECACB; font-weight: 700; }
 
-  /* ── NAV ── */
-  .nav {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 0 24px;
-    height: 60px;
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    color: #fff;
+    padding: 28px 24px 24px;
+  }
+  .header-inner {
+    max-width: 780px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    gap: 16px;
+    flex-wrap: wrap;
   }
-  .logo {
-    font-family: 'Sora', sans-serif;
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--teal);
-    letter-spacing: -0.04em;
-    text-decoration: none;
+  .brand {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 14px;
   }
-  .logo-dot { color: var(--coral); }
-  .logo-badge {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    background: var(--teal-lt);
-    color: var(--teal);
-    padding: 3px 8px;
-    border-radius: 20px;
-    letter-spacing: 0.02em;
-  }
-  .nav-right {
-    font-size: 12px;
-    color: var(--soft);
-    font-weight: 500;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    background: var(--white);
-    padding: 52px 24px 44px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-  }
-  .hero-inner { max-width: 640px; margin: 0 auto; }
-  .hero-pill {
-    display: inline-block;
-    background: var(--teal-lt);
-    color: var(--teal);
-    font-family: 'Sora', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 5px 14px;
-    border-radius: 20px;
-    margin-bottom: 22px;
-  }
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(28px, 6vw, 44px);
-    font-weight: 400;
-    line-height: 1.15;
-    color: var(--ink);
-    margin-bottom: 14px;
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--coral);
-  }
-  .hero-sub {
-    font-size: 15px;
-    color: var(--soft);
-    max-width: 460px;
-    margin: 0 auto 32px;
-    line-height: 1.7;
-  }
-
-  /* ── ADVISOR NOTE ── */
-  .advisor-note {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px 22px;
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-    text-align: left;
-    margin-top: 8px;
-  }
-  .advisor-avatar {
+  .brand-logo {
     width: 48px;
     height: 48px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--teal), var(--teal-mid));
-    flex-shrink: 0;
+    background: var(--orange);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Sora', sans-serif;
+    font-family: "Bricolage Grotesque", sans-serif;
     font-weight: 800;
-    font-size: 16px;
+    font-size: 20px;
     color: #fff;
-    border: 2px solid var(--teal-lt);
-    overflow: hidden;
+    flex-shrink: 0;
   }
-  .advisor-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-  .advisor-from {
-    font-family: 'Sora', sans-serif;
-    font-size: 10px;
+  .brand-text h1 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 20px;
     font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--coral);
-    margin-bottom: 5px;
+    letter-spacing: -0.3px;
   }
-  .advisor-note p {
-    font-size: 14px;
-    color: var(--ink-2);
-    line-height: 1.65;
+  .brand-text p {
+    font-size: 12px;
+    opacity: 0.75;
+    margin-top: 2px;
   }
+  .advisor-chip {
+    background: rgba(255,255,255,0.12);
+    border-radius: 40px;
+    padding: 8px 16px;
+    font-size: 13px;
+    text-align: right;
+  }
+  .advisor-chip strong { display: block; font-size: 14px; }
+  .advisor-chip span { opacity: 0.75; font-size: 12px; }
 
-  /* ── MAIN ── */
-  .main {
-    max-width: 680px;
+  /* ── HERO GREETING ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #00439e 100%);
+    color: #fff;
+    padding: 48px 24px 56px;
+  }
+  .hero-inner {
+    max-width: 780px;
     margin: 0 auto;
-    padding: 36px 20px 60px;
   }
-
-  /* ── SECTION LABEL ── */
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Sora', sans-serif;
-    font-size: 10px;
+  .report-label {
+    display: inline-block;
+    background: var(--orange);
+    color: #fff;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--teal);
+    padding: 4px 12px;
+    border-radius: 20px;
     margin-bottom: 20px;
   }
-  .section-label::before {
-    content: '';
+  .hero h2 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .hero h2 em {
+    font-style: normal;
+    color: #FFB347;
+  }
+  .hero p {
+    font-size: 15px;
+    opacity: 0.85;
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  /* ── RISK BADGE ── */
+  .risk-strip {
+    max-width: 780px;
+    margin: -28px auto 0;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .risk-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .risk-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+  .risk-icon.high   { background: #FEE2E2; }
+  .risk-icon.medium { background: #FEF3C7; }
+  .risk-icon.low    { background: #D1FAE5; }
+  .risk-info { flex: 1; min-width: 160px; }
+  .risk-info h3 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .risk-info p { font-size: 13px; color: var(--text-soft); }
+  .risk-stats {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-val {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--orange);
     display: block;
-    width: 4px;
-    height: 16px;
-    background: var(--coral);
-    border-radius: 2px;
+  }
+  .stat-lbl { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── MAIN CONTAINER ── */
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 24px 60px;
+  }
+
+  /* ── SECTION TITLES ── */
+  .section-title {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--text-soft);
+    margin-bottom: 20px;
   }
 
   /* ── BENEFIT CARDS ── */
-  .benefit-card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    margin-bottom: 16px;
-    overflow: hidden;
-    transition: box-shadow 0.2s;
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
   }
-  .benefit-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); }
 
-  .benefit-card-header {
-    padding: 20px 22px 16px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
   }
-  .benefit-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.11);
+  }
+
+  .card-header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+  2 align-items: flex-start;
+    gap: 12px;
+  }
+  .card-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--navy-light);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
     flex-shrink: 0;
   }
-  .benefit-icon.teal   { background: var(--teal-lt); }
-  .benefit-icon.coral  { background: var(--coral-lt); }
-  .benefit-icon.gold   { background: var(--note-gold-lt); }
-  .benefit-icon.green  { background: var(--good-lt); }
-
-  .benefit-title {
-    font-family: 'Sora', sans-serif;
-    font-size: 17px;
+  .card-title-block { flex: 1; }
+  .card-title {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 15px;
     font-weight: 700;
-    color: var(--ink);
-    line-height: 1.25;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
-  .benefit-badge {
+  .badge {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
-  }
-  .badge-gap   { background: var(--gap-red-lt); color: var(--gap-red); }
-  .badge-have  { background: var(--good-lt); color: var(--good-green); }
-  .badge-addon { background: var(--note-gold-lt); color: var(--note-gold); }
-
-  .benefit-desc {
-    padding: 0 22px 16px;
-    font-size: 14px;
-    color: var(--soft);
-    line-height: 1.7;
-  }
-  .benefit-desc strong { color: var(--ink); font-weight: 600; }
-
-  /* illness cost pills */
-  .illness-pills {
-    padding: 0 22px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .illness-pill {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .illness-pill-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink-2);
-  }
-  .illness-pill-cost {
-    font-size: 13px;
     font-weight: 700;
-    color: var(--gap-red);
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.2px;
   }
+  .badge-gap      { background: #FEE2E2; color: #991B1B; }
+  .badge-have     { background: var(--green-light); color: var(--green); }
+  .badge-addon    { background: var(--yellow-light); color: var(--yellow); }
+  .badge-missing  { background: #F3F4F6; color: #6B7280; }
 
-  /* coverage amount box */
-  .coverage-box {
-    margin: 0 22px 20px;
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px 18px;
-  }
+  .card-body { padding: 16px 20px 18px; }
+
   .coverage-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 0;
-  }
-  .coverage-row + .coverage-row {
-    border-top: 1px dashed var(--border);
-  }
-  .coverage-row-label {
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border);
     font-size: 13px;
-    color: var(--soft);
-    display: flex;
-    align-items: center;
-    gap: 6px;
   }
-  .coverage-row-value {
-    font-family: 'Sora', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--teal);
-  }
-  .coverage-row-value.starter { color: var(--coral); }
-  .coverage-row-note {
-    font-size: 11px;
-    color: var(--soft);
-    margin-top: 8px;
-    font-style: italic;
-  }
+  .coverage-row:last-child { border-bottom: none; }
+  .coverage-row-label { color: var(--text-soft); }
+  .coverage-row-value { font-weight: 700; color: var(--navy); }
+  .coverage-row-value.ideal   { color: var(--green); }
+  .coverage-row-value.starter { color: var(--orange); }
+  .coverage-row-value.have    { color: var(--green); }
+  .coverage-row-value.missing { color: #9CA3AF; }
 
-  /* waiver checklist */
-  .waiver-checks {
-    padding: 0 22px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  .illness-table { width: 100%; font-size: 12px; }
+  .illness-table th {
+    text-align: left;
+    color: var(--gray);
+  2 font-weight: 600;
+    padding: 4px 0 6px;
+    border-bottom: 1px solid var(--border);
   }
-  .waiver-check {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 14px;
-    color: var(--ink-2);
-  }
-  .check-icon {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--good-lt);
-    color: var(--good-green);
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
+  .illness-table th:last-child { text-align: right; }
+  .illness-table td { padding: 5px 0; color: var(--text-soft); }
+  .illness-table td:last-child { text-align: right; font-weight: 600; color: var(--navy); }
 
-  /* ── CTA BLOCK ── */
-  .cta-block {
-    background: linear-gradient(135deg, var(--teal-d) 0%, var(--teal) 100%);
-    border-radius: 24px;
-    padding: 40px 28px;
-    text-align: center;
-    margin: 36px 0 24px;
+  .card-note {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: var(--gray-light);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+  .card-note.urgent { background: #FEF2F2; color: #7F1D1D; }
+  .card-note.good   { background: var(--green-light); color: #14532D; }
+
+  /* ── PERSONAL MESSAGE ── */
+  .message-card {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 16px;
+    padding: 28px 28px 28px 32px;
+    margin-bottom: 24px;
     position: relative;
     overflow: hidden;
   }
-  .cta-block::before {
-    content: '';
+  .message-card::before {
+    content: "";
     position: absolute;
-    top: -40px; right: -40px;
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.04);
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: var(--orange);
   }
-  .cta-block::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; left: -30px;
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.03);
+  .message-card h3 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
   }
-  .cta-timer {
-    display: inline-flex;
+  .message-card p {
+    font-size: 14px;
+    line-height: 1.75;
+    opacity: 0.9;
+  }
+  .message-sig {
+    margin-top: 16px;
+    display: flex;
     align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.12);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 20px;
+    gap: 10px;
   }
-  .cta-block h2 {
-    font-family: 'Sora', sans-serif;
-    font-size: clamp(20px, 4vw, 28px);
+  .message-sig-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 800;
-    color: #fff;
-    line-height: 1.25;
-    margin-bottom: 14px;
-    position: relative;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .message-sig-text strong { display: block; font-size: 14px; }
+  .message-sig-text span   { font-size: 12px; opacity: 0.7; }
+
+  /* ── CTA BLOCK ── */
+  .cta-block {
+    background: linear-gradient(135deg, #FFF0E8, #FFEAD8);
+    border: 1px solid #FBBF9A;
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .cta-block h3 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
   }
   .cta-block p {
     font-size: 14px;
-    color: rgba(255,255,255,0.8);
-    max-width: 420px;
-    margin: 0 auto 24px;
-    line-height: 1.7;
+    color: var(--text-soft);
+    margin-bottom: 20px;
+    max-width: 480px;
+  2 margin-left: auto;
+    margin-right: auto;
   }
   .cta-btn {
     display: inline-block;
-    background: var(--coral);
+    background: var(--orange);
     color: #fff;
-    font-family: 'Sora', sans-serif;
+    font-family: "Plus Jakarta Sans", sans-serif;
     font-size: 15px;
     font-weight: 700;
-    padding: 16px 36px;
+    padding: 14px 36px;
     border-radius: 50px;
     text-decoration: none;
+    letter-spacing: 0.2px;
+    transition: background 0.15s, transform 0.15s;
     cursor: pointer;
     border: none;
-    transition: background 0.15s, transform 0.15s;
-    position: relative;
-    letter-spacing: -0.01em;
   }
-  .cta-btn:hover { background: var(--coral-d); transform: translateY(-2px); }
-  .cta-trust {
-    margin-top: 16px;
-    font-size: 12px;
-    color: rgba(255,255,255,0.6);
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .cta-trust span { display: flex; align-items: center; gap: 4px; }
-
-  /* ── SOCIAL PROOF ── */
-  .social-proof {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px 22px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .stars {
-    color: #F59E0B;
-    font-size: 20px;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
-  }
-  .social-proof-text {
-    font-size: 13px;
-    color: var(--soft);
-  }
-  .social-proof-text strong { color: var(--teal); }
-  .social-proof-quote {
-    font-size: 13px;
-    color: var(--ink-2);
-    font-style: italic;
-    margin-top: 4px;
-  }
-  .avatars {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 12px 0 6px;
-    gap: 0;
-  }
-  .avatar-bubble {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 2px solid var(--white);
-    margin-left: -6px;
-    background: linear-gradient(135deg, var(--teal-lt), var(--teal-mid));
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--teal);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .avatar-bubble:first-child { margin-left: 0; }
+  .cta-btn:hover { background: #C94208; transform: translateY(-1px); }
 
   /* ── FOOTER ── */
   .footer {
-    background: var(--ink);
-    color: rgba(255,255,255,0.5);
+    background: var(--navy);
+    color: rgba(255,255,255,0.6);
     text-align: center;
     padding: 24px;
     font-size: 12px;
-    line-height: 1.9;
+    line-height: 1.8;
   }
-  .footer strong { color: rgba(255,255,255,0.85); }
+  .footer strong { color: #fff; }
 
-  /* ── DISCLAIMER ── */
-  .disclaimer {
-    font-size: 11px;
-    color: #AAA;
-    text-align: center;
-    line-height: 1.7;
-    max-width: 540px;
-    margin: 0 auto 32px;
+  /* ── PRINT ── */
+  @media print {
+    .topbar, .cta-block, .footer { display: none; }
+    body { background: #fff; }
   }
 
-  @media (max-width: 480px) {
-    .hero { padding: 36px 18px 32px; }
-    .advisor-note { flex-direction: column; gap: 10px; }
-    .main { padding: 28px 16px 48px; }
-    .cta-block { padding: 32px 20px; }
-    .benefit-card-header { padding: 16px 18px 12px; }
-    .benefit-desc, .illness-pills, .coverage-box, .waiver-checks { padding-left: 18px; padding-right: 18px; }
-    .coverage-box { margin-left: 18px; margin-right: 18px; }
+  @media (max-width: 540px) {
+    .risk-card { flex-direction: column; align-items: flex-start; }
+    .risk-stats { width: 100%; justify-content: space-around; }
+    .hero h2 { font-size: 24px; }
+    .cards-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- URGENCY BAR -->
-<div class="urgency-bar">
-  ⏰ <strong>Your Coverage Snapshot is reserved for 48 hours</strong> — Book your Clarity Session before it expires
+<div class="topbar">Your Personalized Coverage Report &mdash; Prepared by Juno Rocillo, FWD Financial Advisor</div>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-logo">KJ</div>
+      <div class="brand-text">
+        <h1>KnowWithJuno</h1>
+        <p>FWD Life Insurance &mdash; Financial Advisory</p>
+      </div>
+ 2  </div>
+    <div class="advisor-chip">
+      <strong>Juno Rocillo</strong>
+      <span>junorocillo.pro@gmail.com</span>
+    </div>
+  </div>
 </div>
 
-<!-- NAV -->
-<nav class="nav">
-  <a class="logo" href="#">
-    KnowWith<span class="logo-dot">Juno</span>
-    <span class="logo-badge">FWD Philippines</span>
-  </a>
-  <div class="nav-right">Your Coverage Snapshot</div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
+<div class="hero">
   <div class="hero-inner">
-    <div class="hero-pill">Coverage Snapshot</div>
-    <h1>Your personalized insurance<br>needs, <em id="client-name">there</em>.</h1>
-    <p class="hero-sub">Based on your Coverage Test answers — here are the benefits your plan should include, and by how much.</p>
+    <span class="report-label">Coverage Gap Report</span>
+    <h2 id="greeting">Hello, <em id="client-name">Friend</em> &mdash;<br>Here is Your Protection Snapshot</h2>
+    <p id="hero-desc">Based on your quiz answers, we mapped your current coverage against what a breadwinner in your situation typically needs. Here is what we found.</p>
+  </div>
+</div>
 
-    <!-- Advisor note -->
-    <div class="advisor-note">
-      <div class="advisor-avatar" id="advisor-avatar">JR</div>
-      <div>
-        <div class="advisor-from">From Juno — Your Coverage Advisor</div>
-        <p id="advisor-intro">Based on what you shared, I put together this snapshot for you. It shows exactly where your protection stands — and where you might have gaps worth addressing.</p>
+<div class="risk-strip">
+  <div class="risk-card">
+    <div class="risk-icon" id="risk-icon">&#9888;&#65039;</div>
+    <div class="risk-info">
+      <h3 id="risk-title">Exposure Level</h3>
+      <p id="risk-desc">Based on your quiz responses</p>
+    </div>
+    <div class="risk-stats">
+      <div class="stat">
+        <span class="stat-val" id="stat-gap">&#8212;</span>
+        <span class="stat-lbl">Est. Gap</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val" id="stat-pct">&#8212;</span>
+        <span class="stat-lbl">Coverage Rate</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val" id="stat-years">&#8212;</span>
+        <span class="stat-lbl">Years Protected</span>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- MAIN CONTENT -->
-<main class="main">
+<div class="container">
 
-  <div class="section-label">Your Insurance Benefits</div>
+  <div style="margin-top: 32px;">
+    <p class="section-title">Your Benefit-by-Benefit Breakdown</p>
+    <p class="section-sub">Each card shows what you need, what you have, and where the gaps are.</p>
+  </div>
 
-  <!-- Cards injected by JS -->
-  <div id="cards-container"></div>
+  <div class="cards-grid" id="cards-grid">
+    <!-- JS will inject cards here -->
+  </div>
 
-  <!-- CTA BLOCK -->
+  <div class="message-card" id="message-card">
+    <h3>A Note From Your Advisor</h3>
+    <p id="advisor-message">Loading your personalized message...</p>
+ 2  <div class="message-sig">
+      <div class="message-sig-avatar">JR</div>
+      <div class="message-sig-text">
+        <strong>Juno Rocillo</strong>
+        <span>FWD Financial Advisor &mdash; KnowWithJuno</span>
+      </div>
+    </div>
+  </div>
+
   <div class="cta-block">
-    <div class="cta-timer">⏰ Results available for 48 hours</div>
-    <h2>See exactly how these numbers<br>translate into a plan — and what it costs</h2>
-    <p>In your free 30-min Clarity Session, I'll walk you through the specific plan options that cover all of this — clear, no jargon, no pressure to buy anything.</p>
-    <a class="cta-btn" href="https://calendly.com/junorocillo-pro/30min" target="_blank">👉 Get My Plan Options</a>
-    <div class="cta-trust">
-      <span>✅ 100% Free</span>
-      <span>✅ No obligation</span>
-      <span>✅ Personalized</span>
-    </div>
+    <h3>Ready to Close Your Gaps?</h3>
+    <p>Book a free 30-minute strategy call and get a tailored plan that fits your income, your family, and your goals.</p>
+    <a class="cta-btn" href="https://calendly.com/junorocillo-pro/30min" target="_blank">&#128197; Schedule My Free Call</a>
   </div>
 
-  <!-- SOCIAL PROOF -->
-  <div class="social-proof">
-    <div class="stars">★★★★★</div>
-    <div class="social-proof-text"><strong>4.9 stars</strong> from 250+ clients</div>
-    <div class="social-proof-quote">"Walang pilitan na nangyari" — Joanna</div>
-    <div class="avatars">
-      <div class="avatar-bubble">KL</div>
-      <div class="avatar-bubble">MR</div>
-      <div class="avatar-bubble">AJ</div>
-      <div class="avatar-bubble">SC</div>
-      <div class="avatar-bubble">+</div>
-    </div>
-    <div class="social-proof-text">Join 300+ clients already protected</div>
-  </div>
+  <p style="font-size: 12px; color: #9CA3AF; text-align: center; max-width: 560px; margin: 0 auto;">
+    This report is for informational purposes only and does not constitute a formal financial plan. Coverage amounts are illustrative estimates based on your quiz responses. Actual coverage needs may vary. Consult Juno for a complete financial needs analysis.
+  </p>
 
-  <div class="disclaimer">
-    This snapshot is for informational purposes only and does not constitute a formal financial plan. Coverage amounts are illustrative estimates based on your quiz responses. Actual needs may vary. Consult Juno for a complete financial needs analysis.
-  </div>
+</div>
 
-</main>
-
-<!-- FOOTER -->
 <div class="footer">
-  <strong>KnowWithJuno — Powered by FWD Life Insurance Philippines</strong><br>
-  Juno Rocillo · junorocillo.pro@gmail.com<br>
-  © 2025 KnowWithJuno. All rights reserved.
+  <strong>KnowWithJuno &mdash; Powered by FWD Life Insurance</strong><br>
+  Juno Rocillo &bull; junorocillo.pro@gmail.com<br>
+  &copy; 2025 KnowWithJuno. All rights reserved.
 </div>
 
 <script>
 (function() {
 
   // ── PARSE URL PARAMS ──────────────────────────────────────────────
-  var params      = new URLSearchParams(window.location.search);
-  var clientName  = params.get("n")   || "there";
+  var params = new URLSearchParams(window.location.search);
+  var clientName  = params.get("n")   || "Friend";
+  var gapRaw      = params.get("g")   || "0";
   var incomeKey   = params.get("inc") || "50k";
+  var pctRaw      = params.get("pct") || "40";
+  var yearsRaw    = params.get("y")   || "0";
   var covRaw      = params.get("cov") || "";
+  var riskLabel   = params.get("rl")  || "Moderately Exposed";
   var situation   = params.get("sit") || "family";
 
-  // ── CLIENT NAME ───────────────────────────────────────────────────
-  document.getElementById("client-name").textContent = clientName;
+  var gapAmt   = parseInt(gapRaw, 10)  || 0;
+  var pct      = parseInt(pctRaw, 10)  || 40;
+  var years    = parseInt(yearsRaw, 10) || 0;
 
-  // ── ADVISOR INTRO ─────────────────────────────────────────────────
-  var sitText = situation === "ofw"    ? "an OFW"
-              : situation === "single" ? "a single professional"
-              : situation === "couple" ? "a dual-income household"
-              : "a family breadwinner";
-
-  document.getElementById("advisor-intro").textContent =
-    "Based on what you shared as " + sitText + ", I put together this snapshot for you. " +
-    "It shows exactly where your protection stands — and where you might have gaps worth addressing.";
-
-  // ── INCOME TABLE ──────────────────────────────────────────────────
-  var incomeTable = {
-    "under25k": 20000, "<25k": 20000,
-    "25k": 25000, "25k-35k": 30000, "35k-50k": 42500,
-    "50k": 50000, "50k-75k": 62500,
-    "75k-100k": 87500, "100k+": 120000, "100k": 120000
-  };
-  var monthlyIncome = incomeTable[incomeKey] || incomeTable[(incomeKey||"").toLowerCase()] || 50000;
-  var annualIncome  = monthlyIncome * 12;
-
-  // ── COVERAGE CHECK ────────────────────────────────────────────────
+  // coverage items client already has
   var hasList = covRaw ? covRaw.toLowerCase().split(",").map(function(s){ return s.trim(); }) : [];
+
   function has(key) {
     return hasList.some(function(h){ return h.indexOf(key) !== -1; });
   }
 
-  // ── FORMAT ────────────────────────────────────────────────────────
-  function pesoAbbr(n) {
-    if (n >= 1000000) return "₱" + (n/1000000).toFixed(1) + " million";
-    if (n >= 1000)    return "₱" + Math.round(n/1000) + " thousand";
-    return "₱" + n.toLocaleString();
+  // ── INCOME TABLE ──────────────────────────────────────────────────
+  var incomeTable = {
+    "under25k":  20000,
+    "<25k":      20000,
+    "25k":       25000,
+    "25k-35k":   30000,
+    "35k-50k":   42500,
+    "50k":       50000,
+    "50k-75k":   62500,
+    "75k-100k":  87500,
+    "100k+":     120000,
+    "100k":      120000
+  };
+
+  var monthlyIncome = incomeTable[incomeKey] || incomeTable[incomeKey.toLowerCase()] || 50000;
+  var annualIncome  = monthlyIncome * 12;
+
+  // ── FORMAT HELPERS ────────────────────────────────────────────────
+  function peso(n) {
+    if (n >= 1000000) return "\u20B1" + (n / 1000000).toFixed(1) + "M";
+    if (n >= 1000)    return "\u20B1" + (n / 1000).toFixed(0) + "K";
+    return "\u20B1" + n.toLocaleString();
   }
+
   function pesoFull(n) {
-    return "₱" + n.toLocaleString("en-PH");
+    return "\u20B1" + n.toLocaleString("en-PH");
   }
 
-  // ── COMPUTED AMOUNTS ──────────────────────────────────────────────
-  var ciIdeal    = 2000000;
-  var ciStarter  = 1000000;
-  var disIdeal   = annualIncome * 5;
-  var disStarter = annualIncome * 2;
-  var lifeIdeal  = annualIncome * 10;
-  var lifeStart  = annualIncome * 5;
-
-  // ── RENDER HELPERS ────────────────────────────────────────────────
-  var container = document.getElementById("cards-container");
-
-  function el(tag, attrs, inner) {
-    var e = document.createElement(tag);
-    if (attrs) Object.keys(attrs).forEach(function(k){ e.setAttribute(k, attrs[k]); });
-    if (inner !== undefined) e.innerHTML = inner;
-    return e;
+  // ── RISK CONFIG ───────────────────────────────────────────────────
+  var riskLevel = "medium";
+  var rl = riskLabel.toLowerCase();
+  if (rl.indexOf("high") !== -1 || rl.indexOf("critical") !== -1 || rl.indexOf("severe") !== -1) {
+    riskLevel = "high";
+  } else if (rl.indexOf("low") !== -1 || rl.indexOf("minimal") !== -1 || rl.indexOf("well") !== -1) {
+    riskLevel = "low";
   }
 
-  function badgeHTML(type, label) {
-    return '<span class="benefit-badge badge-' + type + '">' + label + '</span>';
+  var riskIcon  = riskLevel === "high" ? "\uD83D\uDEA8" : riskLevel === "low" ? "\u2705" : "\u26A0\uFE0F";
+  var riskColor = riskLevel === "high" ? "#991B1B" : riskLevel === "low" ? "#065F46" : "#92400E";
+
+  // ── HERO ──────────────────────────────────────────────────────────
+  document.getElementById("client-name").textContent = clientName;
+
+  var sitText = situation === "ofw"    ? "an OFW breadwinner" :
+                situation === "single" ? "a single income earner" :
+                situation === "couple" ? "a dual-income couple" :
+                "a family breadwinner";
+
+  document.getElementById("hero-desc").textContent =
+    "Based on your quiz answers, we mapped your current coverage against what " + sitText + " in your situation typically needs. Here is what we found.";
+
+  // ── RISK STRIP ────────────────────────────────────────────────────
+  var riskEl = document.getElementById("risk-icon");
+  riskEl.innerHTML = riskIcon;
+  riskEl.className = "risk-icon " + riskLevel;
+
+  document.getElementById("risk-title").textContent = riskLabel;
+  document.getElementById("risk-desc").textContent  = "Based on your income of approx. " + peso(monthlyIncome) + "/mo";
+
+  document.getElementById("stat-gap").textContent   = gapAmt > 0 ? peso(gapAmt) : "Needs Review";
+  document.getElementById("stat-pct").textContent   = pct + "%";
+  document.getElementById("stat-years").textContent = years > 0 ? years + " yrs" : "TBD";
+
+  // ── COVERAGE AMOUNTS ──────────────────────────────────────────────
+  var lifeIdeal   = annualIncome * 10;   // 10x annual
+  var lifeStarter = annualIncome * 5;    // 5x annual
+  var disIdeal    = annualIncome * 5;
+  var disStarter  = annualIncome * 2;
+  var ciIdeal     = 2000000;
+  var ciStarter   = 1000000;
+
+  // ── BUILD CARDS ───────────────────────────────────────────────────
+  var cards = [];
+
+  // 1. LIFE INSURANCE
+  var hasLife  = has("life");
+  var lifeBadge = hasLife ? "have" : "gap";
+  cards.push({
+    icon: "\uD83D\uDEE1\uFE0F",
+    title: "Life Insurance",
+    badge: lifeBadge,
+    badgeLabel: hasLife ? "\u2713 You Have This" : "\u26A0 Gap Detected",
+    rows: [
+      { label: "Your Ideal Coverage",   value: pesoFull(lifeIdeal),   cls: "ideal" },
+      { label: "Starter Coverage",      value: pesoFull(lifeStarter), cls: "starter" },
+      { label: "Status",                value: hasLife ? "Covered" : "Not confirmed", cls: hasLife ? "have" : "missing" }
+    ],
+    note: hasLife
+      ? "Great. Make sure your beneficiaries and sum assured are updated with your current income level."
+      : "This is your family's income replacement if you pass away. At " + peso(monthlyIncome) + "/mo income, your family needs at least " + peso(lifeStarter) + " to survive the next 5 years.",
+    noteClass: hasLife ? "good" : "urgent"
+  });
+
+  // 2. CRITICAL ILLNESS
+  var hasCI   = has("ci") || has("critical") || has("illness");
+  var ciBadge = hasCI ? "have" : "gap";
+  var illnesses = [
+    { name: "Lung Cancer",          cost: 2780000 },
+    { name: "Stroke (Ischemic)",    cost: 1500000 },
+    { name: "Heart Attack",         cost: 1200000 },
+    { name: "Breast Cancer",        cost: 2100000 },
+    { name: "Kidney Failure (ESRD)",cost: 2400000 }
+  ];
+  var illnessRows = illnesses.map(function(il) {
+    return "<tr><td>" + il.name + "</td><td style=\"text-align:right; font-weight:600; color:#003087\">" + pesoFull(il.cost) + "</td></tr>";
+  }).join("");
+
+  cards.push({
+    icon: "\u2764\uFE0F",
+    title: "Critical Illness",
+    badge: ciBadge,
+    badgeLabel: hasCI ? "\u2713 You Have This" : "\u26A0 Gap Detected",
+    rows: [
+      { label: "Ideal Coverage",   value: pesoFull(ciIdeal),   cls: "ideal" },
+      { label: "Starter Coverage", value: pesoFull(ciStarter), cls: "starter" }
+    ],
+    illnessTable: illnessRows,
+    note: hasCI
+      ? "Good. Confirm your CI rider is still active and not about to expire with your current plan."
+      : "Critical illness does not just cost your life \u2014 it wipes out your savings first. The average cancer treatment in PH exceeds \u20B12M.",
+    noteClass: hasCI ? "good" : "urgent"
+  });
+
+  // 3. HMO / HEALTH
+  var hasHMO   = has("hmo") || has("health") || has("medical");
+  var hmoBadge = hasHMO ? "have" : "addon";
+  cards.push({
+    icon: "\uD83C\uDFE5",
+    title: "HMO / Health Card",
+    badge: hmoBadge,
+    badgeLabel: hasHMO ? "\u2713 You Have This" : "\u2139 Recommended Add-on",
+    rows: [
+      { label: "Typical Annual Benefit",  value: "\u20B1100K \u2013 \u20B1500K",   cls: "ideal" },
+      { label: "Out-of-Pocket Without HMO", value: "Varies (High Risk)", cls: "missing" },
+      { label: "Status", value: hasHMO ? "Covered" : "Not confirmed", cls: hasHMO ? "have" : "missing" }
+    ],
+    note: hasHMO
+      ? "HMO covers day-to-day hospital needs. Make sure you also have a CI rider for major illnesses HMO typically will not fully cover."
+      : "An HMO handles hospitalization and outpatient care. Without one, even a 3-day hospital stay can cost \u20B150K\u2013\u20B1200K out of pocket.",
+    noteClass: hasHMO ? "good" : ""
+  });
+
+  // 4. DISABILITY / INCOME PROTECTION
+  var hasDis   = has("disability") || has("income protection") || has("income");
+  var disBadge = hasDis ? "have" : "gap";
+  cards.push({
+    icon: "\uD83D\uDCBC",
+    title: "Income Protection / Disability",
+    badge: disBadge,
+    badgeLabel: hasDis ? "\u2713 You Have This" : "\u26A0 Gap Detected",
+    rows: [
+      { label: "Ideal Coverage",   value: pesoFull(disIdeal),   cls: "ideal" },
+      { label: "Starter Coverage", value: pesoFull(disStarter), cls: "starter" },
+      { label: "Status", value: hasDis ? "Covered" : "Not confirmed", cls: hasDis ? "have" : "missing" }
+    ],
+    note: hasDis
+      ? "You are protected against income loss. Review your waiting period and benefit duration with your advisor."
+      : "If you cannot work due to illness or injury, who pays the bills? Income protection replaces your salary while you recover. Most breadwinners skip this \u2014 it is one of the most overlooked gaps.",
+    noteClass: hasDis ? "good" : "urgent"
+  });
+
+  // 5. VUL / INVESTMENT
+  var hasVUL   = has("vul") || has("investment") || has("savings");
+  var vulBadge = hasVUL ? "have" : "addon";
+  cards.push({
+    icon: "\uD83D\uDCC8",
+    title: "VUL / Investment-Linked Insurance",
+    badge: vulBadge,
+    badgeLabel: hasVUL ? "\u2713 You Have This" : "\u2139 Recommended Add-on",
+    rows: [
+      { label: "Typical Policy Term",  value: "10\u201320 years",    cls: "ideal" },
+      { label: "Dual Benefit",         value: "Protection + Growth", cls: "have" },
+      { label: "Status", value: hasVUL ? "Covered" : "Not confirmed", cls: hasVUL ? "have" : "missing" }
+    ],
+    note: hasVUL
+      ? "VUL grows your money over time while keeping you insured. Review your fund allocation and ensure it aligns with your risk appetite."
+      : "A VUL plan lets your premiums work double duty \u2014 part goes to protection, part to investment funds. Ideal for breadwinners building long-term wealth.",
+    noteClass: hasVUL ? "good" : ""
+  });
+
+  // 6. WAIVER OF PREMIUM
+  var hasWaiver   = has("waiver") || has("premium");
+  var waiverBadge = hasWaiver ? "have" : "addon";
+  cards.push({
+    icon: "\u270D\uFE0F",
+    title: "Waiver of Premium",
+    badge: waiverBadge,
+    badgeLabel: hasWaiver ? "\u2713 You Have This" : "\u2139 Recommended Add-on",
+    rows: [
+      { label: "Trigger",  value: "Disability / Critical Illness", cls: "ideal" },
+      { label: "Benefit",  value: "Premiums waived, policy continues",  cls: "have" },
+      { label: "Status", value: hasWaiver ? "Covered" : "Not confirmed", cls: hasWaiver ? "have" : "missing" }
+    ],
+    note: hasWaiver
+      ? "Waiver of Premium is active. If you become disabled or critically ill, your policy will not lapse \u2014 your family stays protected."
+      : "This rider ensures your policy keeps running even if you cannot pay premiums due to disability. It is a small addition that prevents your entire plan from collapsing when you need it most.",
+    noteClass: hasWaiver ? "good" : ""
+  });
+
+  // ── RENDER CARDS ──────────────────────────────────────────────────
+  var grid = document.getElementById("cards-grid");
+  cards.forEach(function(card) {
+    var badgeClass = card.badge === "have"   ? "badge-have"   :
+                     card.badge === "gap"    ? "badge-gap"    :
+                     card.badge === "addon"  ? "badge-addon"  : "badge-missing";
+
+    var rowsHtml = card.rows.map(function(r) {
+      return "<div class=\"coverage-row\"><span class=\"coverage-row-label\">" + r.label + "</span><span class=\"coverage-row-value " + r.cls + "\">" + r.value + "</span></div>";
+    }).join("");
+
+    var illnessHtml = "";
+    if (card.illnessTable) {
+      illnessHtml = "<div style=\"margin: 12px 0 8px;\"><p style=\"font-size:12px; font-weight:600; color:#003087; margin-bottom:6px;\">Common Critical Illness Costs in PH:</p><table class=\"illness-table\"><thead><tr><th>Condition</th><th style=\"text-align:right\">Avg. Treatment Cost</th></tr></thead><tbody>" + card.illnessTable + "</tbody></table></div>";
+    }
+
+    var noteHtml = card.note
+      ? "<div class=\"card-note " + (card.noteClass || "") + "\">" + card.note + "</div>"
+      : "";
+
+    var html =
+      "<div class=\"card\">" +
+        "<div class=\"card-header\">" +
+          "<div class=\"card-icon\">" + card.icon + "</div>" +
+          "<div class=\"card-title-block\">" +
+            "<div class=\"card-title\">" + card.title + "</div>" +
+            "<span class=\"badge " + badgeClass + "\">" + card.badgeLabel + "</span>" +
+          "</div>" +
+        "</div>" +
+        "<div class=\"card-body\">" +
+          rowsHtml +
+          illnessHtml +
+          noteHtml +
+        "</div>" +
+      "</div>";
+
+    grid.innerHTML += html;
+  });
+
+  // ── ADVISOR MESSAGE ───────────────────────────────────────────────
+  var gapCards = cards.filter(function(c) { return c.badge === "gap"; }).length;
+  var addonCards = cards.filter(function(c) { return c.badge === "addon"; }).length;
+
+  var msgLines = [];
+
+  if (gapCards === 0 && addonCards <= 1) {
+    msgLines.push(
+      clientName + ", your coverage looks relatively solid based on what you shared. That said, insurance is not a set-it-and-forget-it tool. As your income grows and your family situation changes, your coverage needs to grow too."
+    );
+    msgLines.push(
+      "I would love to do a full review with you to make sure every number is still aligned with where you are today."
+    );
+  } else if (gapCards >= 3) {
+    msgLines.push(
+      clientName + ", I want to be direct with you: based on your quiz, there are significant coverage gaps that could put your family at serious financial risk if something happens to you."
+    );
+    msgLines.push(
+      "The good news is we can address this strategically \u2014 you do not need everything at once. Let us start with the most critical gaps first and build from there."
+    );
+  } else {
+    msgLines.push(
+      clientName + ", your report shows " + gapCards + " coverage gap" + (gapCards !== 1 ? "s" : "") + " and " + addonCards + " recommended add-on" + (addonCards !== 1 ? "s" : "") + " based on your current situation."
+    );
+    msgLines.push(
+      "This is actually a manageable starting point. A single, well-structured plan can close most of these gaps without breaking your monthly budget."
+    );
   }
 
-  // ── CARD BUILDER ──────────────────────────────────────────────────
-  function buildCard(opts) {
-    /*
-      opts: {
-        icon, iconColor, title, badgeType, badgeLabel,
-        desc,
-        pills: [{name, cost}],
-        coverageRows: [{label, value, isStarter}],
-        coverageNote,
-        checks: [string],
-        hasStatus
-      }
-    */
-    var card = el('div', {class: 'benefit-card'});
+  msgLines.push("Book a quick call with me and we will map out exactly what makes sense for you.");
 
-    // Header
-    var header = el('div', {class: 'benefit-card-header'});
-    var iconDiv = el('div', {class: 'benefit-icon ' + (opts.iconColor||'teal')}, opts.icon);
-    var titleBlock = el('div', {class: 'flex-col'});
-    var titleEl = el('div', {class: 'benefit-title'}, opts.title);
-    titleBlock.appendChild(titleEl);
-    titleBlock.innerHTML += badgeHTML(opts.badgeType, opts.badgeLabel);
-    header.appendChild(iconDiv);
-    header.appendChild(titleBlock);
-    card.appendChild(header);
-
-    // Description
-    if (opts.desc) {
-      var descDiv = el('div', {class: 'benefit-desc'}, opts.desc);
-      card.appendChild(descDiv);
-    }
-
-    // Illness pills
-    if (opts.pills && opts.pills.length) {
-      var pillsWrap = el('div', {class: 'illness-pills'});
-      opts.pills.forEach(function(p) {
-        var pill = el('div', {class: 'illness-pill'});
-        pill.innerHTML =
-          '<span class="illness-pill-name">' + p.name + '</span>' +
-          '<span class="illness-pill-cost">~' + pesoAbbr(p.cost) + '</span>';
-        pillsWrap.appendChild(pill);
-      });
-      card.appendChild(pillsWrap);
-    }
-
-    // Coverage amount box
-    if (opts.coverageRows && opts.coverageRows.length) {
-      var box = el('div', {class: 'coverage-box'});
-      opts.coverageRows.forEach(function(r, i) {
-        var row = el('div', {class: 'coverage-row'});
-        row.innerHTML =
-          '<span class="coverage-row-label">' + r.label + '</span>' +
-          '<span class="coverage-row-value' + (r.isStarter ? ' starter' : '') + '">' + r.value + '</span>';
-        box.appendChild(row);
-      });
-      if (opts.coverageNote) {
-        var note = el('div', {class: 'coverage-row-note'}, opts.coverageNote);
-        box.appendChild(note);
-      }
-      card.appendChild(box);
-    }
-
-    // Waiver checklist
-    if (opts.checks && opts.checks.length) {
-      var checksWrap = el('div', {class: 'waiver-checks'});
-      opts.checks.forEach(function(c) {
-        var check = el('div', {class: 'waiver-check'});
-        check.innerHTML = '<div class="check-icon">✓</div><span>' + c + '</span>';
-        checksWrap.appendChild(check);
-      });
-      card.appendChild(checksWrap);
-    }
-
-    container.appendChild(card);
-  }
-
-  // ── 1. CRITICAL ILLNESS ───────────────────────────────────────────
-  var hasCI  = has("ci") || has("critical") || has("illness");
-  buildCard({
-    icon: '🏥', iconColor: 'coral',
-    title: 'Critical Illness Coverage',
-    badgeType: hasCI ? 'have' : 'gap',
-    badgeLabel: hasCI ? '✓ You Have This' : '⚠ Gap detected',
-    desc: 'A serious diagnosis doesn\'t just affect your health — it drains your savings fast. <strong>Treatment costs can reach ₱1M to ₱3M+</strong>, and most company or government insurance only covers a fraction of that. This benefit gives you dedicated emergency cash so you can focus on getting better.',
-    pills: [
-      { name: 'Lung Cancer',         cost: 2780000 },
-      { name: 'Stroke',              cost: 1800000 },
-      { name: 'Acute Heart Attack',  cost: 1000000 },
-      { name: 'Breast Cancer',       cost: 450000  },
-      { name: 'Kidney Disease',      cost: 432000  },
-      { name: 'Open Heart Surgery',  cost: 500000  }
-    ],
-    coverageRows: [
-      { label: '💡 Ideal coverage',   value: pesoFull(ciIdeal),   isStarter: false },
-      { label: '🚀 Starter coverage', value: pesoFull(ciStarter), isStarter: true  }
-    ],
-    coverageNote: 'Less any existing critical illness coverage you already have.'
-  });
-
-  // ── 2. DISABILITY / INCOME PROTECTION ────────────────────────────
-  var hasDis = has("disability") || has("income protection") || has("income");
-  buildCard({
-    icon: '💼', iconColor: 'gold',
-    title: 'Disability / Income Protection',
-    badgeType: hasDis ? 'have' : 'gap',
-    badgeLabel: hasDis ? '✓ You Have This' : '⚠ Gap detected',
-    desc: 'If you become unable to work — whether from illness or an accident — <strong>your income stops but your bills don\'t</strong>. Without this, your savings take the full hit. This benefit replaces your income so you can recover without financial pressure piling on top.',
-    coverageRows: [
-      { label: '💡 Ideal coverage',   value: pesoFull(disIdeal),   isStarter: false },
-      { label: '🚀 Starter coverage', value: pesoFull(disStarter), isStarter: true  }
-    ],
-    coverageNote: 'Ideal = 5 years of your monthly expenses. Starter = at least 2 years.'
-  });
-
-  // ── 3. LIFE INSURANCE ─────────────────────────────────────────────
-  var hasLife = has("life");
-  buildCard({
-    icon: '🛡️', iconColor: 'teal',
-    title: 'Life Insurance',
-    badgeType: hasLife ? 'have' : 'addon',
-    badgeLabel: hasLife ? '✓ You Have This' : 'ℹ Good to have',
-    desc: 'Even without dependents, passing away unexpectedly <strong>leaves behind costs that fall on others</strong> — funeral expenses, outstanding loans, final administrative costs. A modest life insurance benefit ensures you don\'t leave that burden behind.',
-    coverageRows: [
-      { label: '💡 Recommended coverage', value: '₱100K – ₱300K', isStarter: false }
-    ],
-    coverageNote: 'Covers funeral services, incidental costs, and minor outstanding obligations. Exact amount discussed during your session.'
-  });
-
-  // ── 4. WAIVER OF PREMIUM ─────────────────────────────────────────
-  var hasWaiver = has("waiver") || has("premium");
-  buildCard({
-    icon: '✅', iconColor: 'green',
-    title: 'Waiver of Premium',
-    badgeType: hasWaiver ? 'have' : 'addon',
-    badgeLabel: hasWaiver ? '✓ You Have This' : 'ℹ Good to have',
-    desc: 'When you need your insurance most — when you\'re sick or can\'t work — <strong>it shouldn\'t become a financial burden</strong>. This benefit ensures your coverage continues even when you can no longer pay for it.',
-    checks: [
-      'Critical illness diagnosis — premiums are fully waived',
-      'Permanent disability — premiums are fully waived',
-      'Coverage continues uninterrupted — no lapses, no gaps',
-      'You focus on recovery. Your plan takes care of itself.'
-    ]
-  });
+  document.getElementById("advisor-message").innerHTML = msgLines.map(function(l) {
+    return "<p style=\"margin-bottom:10px\">" + l + "</p>";
+  }).join("");
 
 })();
 </script>

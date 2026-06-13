@@ -11,10 +11,12 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --orange: #E8500A;
-    --orange-light: #FFF0E8;
-    --navy: #003087;
-    --navy-light: #EEF3FB;
+    --orange: #E85D3A;
+    --orange-d: #C94428;
+    --orange-light: #FDF0EC;
+    --teal: #0D6B6E;
+    --teal-d: #094B4D;
+    --teal-light: #E6F4F4;
     --green: #1D8348;
     --green-light: #EAFAF1;
     --yellow: #B7770D;
@@ -47,7 +49,7 @@
 
   /* ── HEADER ── */
   .header {
-    background: var(--navy);
+    background: var(--teal);
     color: #fff;
     padding: 28px 24px 24px;
   }
@@ -102,7 +104,7 @@
 
   /* ── HERO GREETING ── */
   .hero {
-    background: linear-gradient(135deg, var(--navy) 0%, #00439e 100%);
+    background: linear-gradient(135deg, var(--teal) 0%, var(--teal-d) 100%);
     color: #fff;
     padding: 48px 24px 56px;
   }
@@ -206,7 +208,7 @@
     font-family: "Bricolage Grotesque", sans-serif;
     font-size: 20px;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--teal);
     margin-bottom: 6px;
   }
   .section-sub {
@@ -239,14 +241,14 @@
     padding: 18px 20px 14px;
     border-bottom: 1px solid var(--border);
     display: flex;
-  2 align-items: flex-start;
+    align-items: flex-start;
     gap: 12px;
   }
   .card-icon {
     width: 42px;
     height: 42px;
     border-radius: 10px;
-    background: var(--navy-light);
+    background: var(--teal-light);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -287,7 +289,7 @@
   }
   .coverage-row:last-child { border-bottom: none; }
   .coverage-row-label { color: var(--text-soft); }
-  .coverage-row-value { font-weight: 700; color: var(--navy); }
+  .coverage-row-value { font-weight: 700; color: var(--teal); }
   .coverage-row-value.ideal   { color: var(--green); }
   .coverage-row-value.starter { color: var(--orange); }
   .coverage-row-value.have    { color: var(--green); }
@@ -297,13 +299,13 @@
   .illness-table th {
     text-align: left;
     color: var(--gray);
-  2 font-weight: 600;
+    font-weight: 600;
     padding: 4px 0 6px;
     border-bottom: 1px solid var(--border);
   }
   .illness-table th:last-child { text-align: right; }
   .illness-table td { padding: 5px 0; color: var(--text-soft); }
-  .illness-table td:last-child { text-align: right; font-weight: 600; color: var(--navy); }
+  .illness-table td:last-child { text-align: right; font-weight: 600; color: var(--teal); }
 
   .card-note {
     margin-top: 12px;
@@ -319,7 +321,7 @@
 
   /* ── PERSONAL MESSAGE ── */
   .message-card {
-    background: var(--navy);
+    background: var(--teal);
     color: #fff;
     border-radius: 16px;
     padding: 28px 28px 28px 32px;
@@ -368,7 +370,7 @@
 
   /* ── CTA BLOCK ── */
   .cta-block {
-    background: linear-gradient(135deg, #FFF0E8, #FFEAD8);
+    background: linear-gradient(135deg, var(--teal-light), #C8E8E8);
     border: 1px solid #FBBF9A;
     border-radius: 16px;
     padding: 28px;
@@ -379,7 +381,7 @@
     font-family: "Bricolage Grotesque", sans-serif;
     font-size: 20px;
     font-weight: 700;
-    color: var(--navy);
+    color: var(--teal);
     margin-bottom: 8px;
   }
   .cta-block p {
@@ -387,7 +389,7 @@
     color: var(--text-soft);
     margin-bottom: 20px;
     max-width: 480px;
-  2 margin-left: auto;
+    margin-left: auto;
     margin-right: auto;
   }
   .cta-btn {
@@ -405,11 +407,11 @@
     cursor: pointer;
     border: none;
   }
-  .cta-btn:hover { background: #C94208; transform: translateY(-1px); }
+  .cta-btn:hover { background: var(--orange-d); transform: translateY(-1px); }
 
   /* ── FOOTER ── */
   .footer {
-    background: var(--navy);
+    background: var(--teal);
     color: rgba(255,255,255,0.6);
     text-align: center;
     padding: 24px;
@@ -444,7 +446,7 @@
         <h1>KnowWithJuno</h1>
         <p>FWD Life Insurance &mdash; Financial Advisory</p>
       </div>
- 2  </div>
+    </div>
     <div class="advisor-chip">
       <strong>Juno Rocillo</strong>
       <span>junorocillo.pro@gmail.com</span>
@@ -470,7 +472,7 @@
     <div class="risk-stats">
       <div class="stat">
         <span class="stat-val" id="stat-gap">&#8212;</span>
-        <span class="stat-lbl">Est. Gap</span>
+        <span class="stat-lbl">Peso Gap</span>
       </div>
       <div class="stat">
         <span class="stat-val" id="stat-pct">&#8212;</span>
@@ -486,6 +488,16 @@
 
 <div class="container">
 
+  <!-- UNLOCK BANNER — peso gap is gated behind booking -->
+  <div style="background:#E6F4F4;border:1.5px solid #0D6B6E;border-radius:14px;padding:18px 22px;margin:28px 0 8px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <div style="font-size:28px;flex-shrink:0">&#128274;</div>
+    <div style="flex:1;min-width:200px">
+      <div style="font-size:15px;font-weight:700;color:#094B4D;margin-bottom:4px">Your exact peso coverage gap is in your Coverage Report.</div>
+      <div style="font-size:13px;color:#6B7280">Book a free 20-min Clarity Session with Juno — he'll walk you through the full number, what it means for your family, and the most cost-effective way to close it.</div>
+    </div>
+    <a href="https://calendly.com/junorocillo-pro/30min" target="_blank" style="display:inline-block;background:#E85D3A;color:#fff;font-size:14px;font-weight:700;padding:12px 22px;border-radius:50px;text-decoration:none;white-space:nowrap;flex-shrink:0">&#128197; Unlock My Report</a>
+  </div>
+
   <div style="margin-top: 32px;">
     <p class="section-title">Your Benefit-by-Benefit Breakdown</p>
     <p class="section-sub">Each card shows what you need, what you have, and where the gaps are.</p>
@@ -498,7 +510,7 @@
   <div class="message-card" id="message-card">
     <h3>A Note From Your Advisor</h3>
     <p id="advisor-message">Loading your personalized message...</p>
- 2  <div class="message-sig">
+    <div class="message-sig">
       <div class="message-sig-avatar">JR</div>
       <div class="message-sig-text">
         <strong>Juno Rocillo</strong>
@@ -609,7 +621,8 @@
   document.getElementById("risk-title").textContent = riskLabel;
   document.getElementById("risk-desc").textContent  = "Based on your income of approx. " + peso(monthlyIncome) + "/mo";
 
-  document.getElementById("stat-gap").textContent   = gapAmt > 0 ? peso(gapAmt) : "Needs Review";
+  // Gap amount is locked — leads must book to get exact peso figure
+  document.getElementById("stat-gap").innerHTML = "<span style=\"font-size:14px;font-weight:700;color:#E85D3A\">&#128274; Locked</span>";
   document.getElementById("stat-pct").textContent   = pct + "%";
   document.getElementById("stat-years").textContent = years > 0 ? years + " yrs" : "TBD";
 
@@ -654,7 +667,7 @@
     { name: "Kidney Failure (ESRD)",cost: 2400000 }
   ];
   var illnessRows = illnesses.map(function(il) {
-    return "<tr><td>" + il.name + "</td><td style=\"text-align:right; font-weight:600; color:#003087\">" + pesoFull(il.cost) + "</td></tr>";
+    return "<tr><td>" + il.name + "</td><td style=\"text-align:right; font-weight:600; color:#0D6B6E\">" + pesoFull(il.cost) + "</td></tr>";
   }).join("");
 
   cards.push({
@@ -762,7 +775,7 @@
 
     var illnessHtml = "";
     if (card.illnessTable) {
-      illnessHtml = "<div style=\"margin: 12px 0 8px;\"><p style=\"font-size:12px; font-weight:600; color:#003087; margin-bottom:6px;\">Common Critical Illness Costs in PH:</p><table class=\"illness-table\"><thead><tr><th>Condition</th><th style=\"text-align:right\">Avg. Treatment Cost</th></tr></thead><tbody>" + card.illnessTable + "</tbody></table></div>";
+      illnessHtml = "<div style=\"margin: 12px 0 8px;\"><p style=\"font-size:12px; font-weight:600; color:#0D6B6E; margin-bottom:6px;\">Common Critical Illness Costs in PH:</p><table class=\"illness-table\"><thead><tr><th>Condition</th><th style=\"text-align:right\">Avg. Treatment Cost</th></tr></thead><tbody>" + card.illnessTable + "</tbody></table></div>";
     }
 
     var noteHtml = card.note

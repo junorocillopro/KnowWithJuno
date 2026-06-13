@@ -12,7 +12,7 @@
   if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
   n.queue=[];t=b.createElement(e);t.async=!0;
   t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  s.parentNode.insertBefore(t,s)}(wildow, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '2060863387858520');
   var _pvEid = 'pv_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
@@ -1675,7 +1675,7 @@
       +"<div class=\"gc-field\"><label class=\"gc-label\">Last Name</label><input type=\"text\" id=\"gc-lname\" placeholder=\"dela Cruz\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"></div>"
       +"<div class=\"gc-field\"><label class=\"gc-label\">Date of Birth</label><input type=\"date\" id=\"gc-dob\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"></div>"
       +"<div class=\"gc-field\"><label class=\"gc-label\">Contact Number</label><input type=\"tel\" id=\"gc-phone\" placeholder=\"+63 9XX XXX XXXX\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"></div>"
-      +"<div class=\"gc-field gc-full\"><label class=\"gc-label\">Email Address</label>"
+      +"<div class=\"gc-field gc-full\"><label class=\"gc-label\">Email Address <span style=\"font-weight:400;text-transform:none;letter-spacing:0;color:#6B7280;font-size:11px\">(Optional — to receive a copy)</span></label>"
       +"<input type=\"email\" id=\"gc-email\" placeholder=\"juan@email.com\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"></div>"
       +"</div>"
       +"<div class=\"calc-nav\" style=\"margin-top:16px\">"
@@ -1735,7 +1735,7 @@
     var f=document.getElementById("gc-fname"),l=document.getElementById("gc-lname"),
         d=document.getElementById("gc-dob"),p=document.getElementById("gc-phone"),
         e=document.getElementById("gc-email"),btn=document.getElementById("gc-btn-submit");
-    if(btn)btn.disabled=!(f&&f.value&&l&&l.value&&d&&d.value&&p&&p.value&&e&&e.value);
+    if(btn)btn.disabled=!(f&&f.value&&p&&p.value);
   };
 
   window.gcSendOTP=function(){
@@ -1883,10 +1883,6 @@
       "<h3 style=\"font-family:'Bricolage Grotesque', 'Georgia', serif;font-size:22px;font-weight:700;color:var(--ink);margin:0 0 4px\">"
       +"Your Coverage Report is <span style=\"color:var(--orange)\">READY!</span></h3>"
       +"<p style=\"font-size:14px;color:var(--gray);margin:0 0 20px\">Here\u2019s what we found based on your answers \uD83D\uDC47</p>"
-      +"<div class=\"gc-countdown\">"
-      +"\u23F0\u00A0 Your report is reserved for the next\u00A0"
-      +"<span class=\"gc-countdown-time\" id=\"gc-cd-time\">47:59:59</span>"
-      +"</div>"
       +"<div class=\"prot-card\">"
       +"<div class=\"prot-top-label\">Your Current Protection Level</div>"
       +"<div class=\"prot-bar-wrap\"><div class=\"prot-bar-fill\" id=\"gc-prot-fill\"></div><div class=\"prot-thumb\" id=\"gc-prot-thumb\"></div></div>"
@@ -1897,7 +1893,7 @@
       +"<h4 style=\"font-family:'Bricolage Grotesque', 'Georgia', serif;font-size:18px;font-weight:700;color:var(--ink);margin:24px 0 4px\">"
       +"Benefits identified <span style=\"color:var(--orange)\">for your profile:</span></h4>"
       +"<p style=\"font-size:13px;color:var(--gray);margin:0 0 14px\">"
-      +gapCount+" of "+allBens.length+" benefits need attention."
+      +"Estimated coverage gap: <strong style=\"color:var(--orange)\">"+ gcFmt(gap) +"</strong>"
       +(userEmail?" Full report sent to <strong style=\"color:var(--orange)\">"+userEmail+"</strong>.":"")
       +"</p>"
       +benefitHTML
@@ -2036,62 +2032,4 @@
     position: fixed;
     bottom: 0; left: 0; right: 0;
     z-index: 999;
-    background: white;
-    border-top: 1px solid var(--border);
-    padding: 12px 16px;
-    box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
-    align-items: center;
-    gap: 12px;
-  }
-  .sticky-mobile-cta .sticky-text {
-    flex: 1;
-    font-size: 12px;
-    color: var(--gray);
-    line-height: 1.4;
-  }
-  .sticky-mobile-cta .sticky-text strong {
-    display: block;
-    font-size: 13px;
-    color: var(--ink);
-    font-weight: 700;
-  }
-  .sticky-mobile-cta .sticky-btn {
-    background: var(--orange);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 9px;
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-    white-space: nowrap;
-    flex-shrink: 0;
-    box-shadow: 0 4px 16px rgba(232,93,58,0.3);
-  }
-  @media(max-width: 640px) {
-    .sticky-mobile-cta { display: flex; }
-    body { padding-bottom: 80px; }
-  }
-</style>
-<div class="sticky-mobile-cta" id="sticky-cta">
-  <div class="sticky-text">
-    <strong>Check your coverage gap</strong>
-    Free · Takes 2 minutes
-  </div>
-  <a href="#calculator" class="sticky-btn" onclick="document.getElementById('sticky-cta').style.display='none'">Start Free →</a>
-</div>
-<script>
-(function(){
-  var bar=document.getElementById('sticky-cta');
-  if(!bar)return;
-  var calc=document.getElementById('calculator');
-  if(!calc)return;
-  window.addEventListener('scroll',function(){
-    var rect=calc.getBoundingClientRect();
-    if(rect.top<window.innerHeight&&rect.bottom>0){bar.style.display='none';}
-    else{bar.style.display='flex';}
-  },{passive:true});
-})();
-</script>
-
-</body>
-</html>
+    backgroun

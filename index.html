@@ -1954,7 +1954,7 @@
       var reportURL='https://knowwithjuno.com/coverage-report.html?'+reportParams.toString();
 
       // Meta Pixel — track quiz completion as Lead
-      var _leadEid='lead_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);if(typeof fbq==='function'){fbq('track','Lead',{'currency':'PHP','value':0},{eventID:_leadEid});}
+      var _leadEid='lead_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);/* Lead pixel moved to webhook .then() callback */
 
       fetch("https://hook.eu1.make.com/imm7ejh2x7be7vxsb8y2zpjr6eiuepgj",{
         method:"POST",
@@ -1993,6 +1993,7 @@
         })
       }).then(function(r){
         console.log("Make webhook (GHL+Notion) submitted:",r.status);
+        if(r.ok&&typeof fbq==="function"){fbq("track","Lead",{"currency":"PHP","value":0},{eventID:_leadEid});}
       }).catch(function(e){
         console.warn("Make webhook error:",e);
       });

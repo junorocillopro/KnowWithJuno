@@ -1954,7 +1954,7 @@
       var reportURL='https://knowwithjuno.com/coverage-report.html?'+reportParams.toString();
 
       // Meta Pixel — track quiz completion as Lead
-      var _leadEid='lead_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);if(typeof fbq==='function'){fbq('track','Lead',{},{eventID:_leadEid});}
+      var _leadEid='lead_'+Date.now()+'_'+Math.random().toString(36).substr(2,9);if(typeof fbq==='function'){fbq('track','Lead',{'currency':'PHP','value':0},{eventID:_leadEid});}
 
       fetch("https://hook.eu1.make.com/imm7ejh2x7be7vxsb8y2zpjr6eiuepgj",{
         method:"POST",

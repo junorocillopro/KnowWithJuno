@@ -36,7 +36,7 @@
     min-height: 100vh;
   }
 
-  /* ── TOP BAR ── */
+  /* ââ TOP BAR ââ */
   .topbar {
     background: var(--orange);
     color: #fff;
@@ -47,7 +47,7 @@
     letter-spacing: 0.5px;
   }
 
-  /* ── HEADER ── */
+  /* ââ HEADER ââ */
   .header {
     background: var(--teal);
     color: #fff;
@@ -102,7 +102,7 @@
   .advisor-chip strong { display: block; font-size: 14px; }
   .advisor-chip span { opacity: 0.75; font-size: 12px; }
 
-  /* ── HERO GREETING ── */
+  /* ââ HERO GREETING ââ */
   .hero {
     background: linear-gradient(135deg, var(--teal) 0%, var(--teal-d) 100%);
     color: #fff;
@@ -142,7 +142,7 @@
     line-height: 1.7;
   }
 
-  /* ── RISK BADGE ── */
+  /* ââ RISK BADGE ââ */
   .risk-strip {
     max-width: 780px;
     margin: -28px auto 0;
@@ -196,14 +196,14 @@
   }
   .stat-lbl { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
 
-  /* ── MAIN CONTAINER ── */
+  /* ââ MAIN CONTAINER ââ */
   .container {
     max-width: 780px;
     margin: 0 auto;
     padding: 32px 24px 60px;
   }
 
-  /* ── SECTION TITLES ── */
+  /* ââ SECTION TITLES ââ */
   .section-title {
     font-family: "Bricolage Grotesque", sans-serif;
     font-size: 20px;
@@ -217,7 +217,7 @@
     margin-bottom: 20px;
   }
 
-  /* ── BENEFIT CARDS ── */
+  /* ââ BENEFIT CARDS ââ */
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -319,7 +319,7 @@
   .card-note.urgent { background: #FEF2F2; color: #7F1D1D; }
   .card-note.good   { background: var(--green-light); color: #14532D; }
 
-  /* ── PERSONAL MESSAGE ── */
+  /* ââ PERSONAL MESSAGE ââ */
   .message-card {
     background: var(--teal);
     color: #fff;
@@ -368,7 +368,7 @@
   .message-sig-text strong { display: block; font-size: 14px; }
   .message-sig-text span   { font-size: 12px; opacity: 0.7; }
 
-  /* ── CTA BLOCK ── */
+  /* ââ CTA BLOCK ââ */
   .cta-block {
     background: linear-gradient(135deg, var(--teal-light), #C8E8E8);
     border: 1px solid #FBBF9A;
@@ -409,7 +409,7 @@
   }
   .cta-btn:hover { background: var(--orange-d); transform: translateY(-1px); }
 
-  /* ── FOOTER ── */
+  /* ââ FOOTER ââ */
   .footer {
     background: var(--teal);
     color: rgba(255,255,255,0.6);
@@ -420,7 +420,7 @@
   }
   .footer strong { color: #fff; }
 
-  /* ── PRINT ── */
+  /* ââ PRINT ââ */
   @media print {
     .topbar, .cta-block, .footer { display: none; }
     body { background: #fff; }
@@ -432,7 +432,33 @@
     .hero h2 { font-size: 24px; }
     .cards-grid { grid-template-columns: 1fr; }
   }
+
+  /* ── GAP REVEAL ── */
+  .gap-reveal { background:var(--gap-red-lt); border:2px solid var(--gap-red); border-radius:20px; padding:28px 24px; text-align:center; margin:24px 0 32px; }
+  .gap-reveal-label { font-family:'Sora',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--gap-red); margin-bottom:12px; }
+  .gap-reveal-locked { font-family:'Sora',sans-serif; font-size:28px; font-weight:800; color:var(--gap-red); margin-bottom:10px; }
+  .gap-reveal-sub { font-size:13px; color:var(--soft); margin-bottom:20px; line-height:1.65; max-width:380px; margin-left:auto; margin-right:auto; }
+  .gap-unlock-btn { display:inline-block; background:var(--gap-red); color:#fff; font-family:'Sora',sans-serif; font-size:14px; font-weight:700; padding:14px 32px; border-radius:50px; text-decoration:none; transition:background 0.15s,transform 0.15s; }
+  .gap-unlock-btn:hover { background:#a93226; transform:translateY(-2px); }
 </style>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2060863387858520');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -488,12 +514,12 @@
 
 <div class="container">
 
-  <!-- UNLOCK BANNER — peso gap is gated behind booking -->
+  <!-- UNLOCK BANNER â peso gap is gated behind booking -->
   <div style="background:#E6F4F4;border:1.5px solid #0D6B6E;border-radius:14px;padding:18px 22px;margin:28px 0 8px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
     <div style="font-size:28px;flex-shrink:0">&#128274;</div>
     <div style="flex:1;min-width:200px">
       <div style="font-size:15px;font-weight:700;color:#094B4D;margin-bottom:4px">Your exact peso coverage gap is in your Coverage Report.</div>
-      <div style="font-size:13px;color:#6B7280">Book a free 20-min Clarity Session with Juno — he'll walk you through the full number, what it means for your family, and the most cost-effective way to close it.</div>
+      <div style="font-size:13px;color:#6B7280">Book a free 20-min Clarity Session with Juno â he'll walk you through the full number, what it means for your family, and the most cost-effective way to close it.</div>
     </div>
     <a href="https://calendly.com/junorocillo-pro/30min" target="_blank" style="display:inline-block;background:#E85D3A;color:#fff;font-size:14px;font-weight:700;padding:12px 22px;border-radius:50px;text-decoration:none;white-space:nowrap;flex-shrink:0">&#128197; Unlock My Report</a>
   </div>
@@ -540,7 +566,7 @@
 <script>
 (function() {
 
-  // ── PARSE URL PARAMS ──────────────────────────────────────────────
+  // ââ PARSE URL PARAMS ââââââââââââââââââââââââââââââââââââââââââââââ
   var params = new URLSearchParams(window.location.search);
   var clientName  = params.get("n")   || "Friend";
   var gapRaw      = params.get("g")   || "0";
@@ -562,7 +588,7 @@
     return hasList.some(function(h){ return h.indexOf(key) !== -1; });
   }
 
-  // ── INCOME TABLE ──────────────────────────────────────────────────
+  // ââ INCOME TABLE ââââââââââââââââââââââââââââââââââââââââââââââââââ
   var incomeTable = {
     "under25k":  20000,
     "<25k":      20000,
@@ -579,7 +605,7 @@
   var monthlyIncome = incomeTable[incomeKey] || incomeTable[incomeKey.toLowerCase()] || 50000;
   var annualIncome  = monthlyIncome * 12;
 
-  // ── FORMAT HELPERS ────────────────────────────────────────────────
+  // ââ FORMAT HELPERS ââââââââââââââââââââââââââââââââââââââââââââââââ
   function peso(n) {
     if (n >= 1000000) return "\u20B1" + (n / 1000000).toFixed(1) + "M";
     if (n >= 1000)    return "\u20B1" + (n / 1000).toFixed(0) + "K";
@@ -590,7 +616,7 @@
     return "\u20B1" + n.toLocaleString("en-PH");
   }
 
-  // ── RISK CONFIG ───────────────────────────────────────────────────
+  // ââ RISK CONFIG âââââââââââââââââââââââââââââââââââââââââââââââââââ
   var riskLevel = "medium";
   var rl = riskLabel.toLowerCase();
   if (rl.indexOf("high") !== -1 || rl.indexOf("critical") !== -1 || rl.indexOf("severe") !== -1) {
@@ -602,7 +628,7 @@
   var riskIcon  = riskLevel === "high" ? "\uD83D\uDEA8" : riskLevel === "low" ? "\u2705" : "\u26A0\uFE0F";
   var riskColor = riskLevel === "high" ? "#991B1B" : riskLevel === "low" ? "#065F46" : "#92400E";
 
-  // ── HERO ──────────────────────────────────────────────────────────
+  // ââ HERO ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
   document.getElementById("client-name").textContent = clientName;
 
   var sitText = situation === "ofw"    ? "an OFW breadwinner" :
@@ -613,7 +639,7 @@
   document.getElementById("hero-desc").textContent =
     "Based on your quiz answers, we mapped your current coverage against what " + sitText + " in your situation typically needs. Here is what we found.";
 
-  // ── RISK STRIP ────────────────────────────────────────────────────
+  // ââ RISK STRIP ââââââââââââââââââââââââââââââââââââââââââââââââââââ
   var riskEl = document.getElementById("risk-icon");
   riskEl.innerHTML = riskIcon;
   riskEl.className = "risk-icon " + riskLevel;
@@ -621,12 +647,12 @@
   document.getElementById("risk-title").textContent = riskLabel;
   document.getElementById("risk-desc").textContent  = "Based on your income of approx. " + peso(monthlyIncome) + "/mo";
 
-  // Gap amount is locked — leads must book to get exact peso figure
+  // Gap amount is locked â leads must book to get exact peso figure
   document.getElementById("stat-gap").innerHTML = "<span style=\"font-size:14px;font-weight:700;color:#E85D3A\">&#128274; Locked</span>";
   document.getElementById("stat-pct").textContent   = pct + "%";
   document.getElementById("stat-years").textContent = years > 0 ? years + " yrs" : "TBD";
 
-  // ── COVERAGE AMOUNTS ──────────────────────────────────────────────
+  // ââ COVERAGE AMOUNTS ââââââââââââââââââââââââââââââââââââââââââââââ
   var lifeIdeal   = annualIncome * 10;   // 10x annual
   var lifeStarter = annualIncome * 5;    // 5x annual
   var disIdeal    = annualIncome * 5;
@@ -634,7 +660,7 @@
   var ciIdeal     = 2000000;
   var ciStarter   = 1000000;
 
-  // ── BUILD CARDS ───────────────────────────────────────────────────
+  // ââ BUILD CARDS âââââââââââââââââââââââââââââââââââââââââââââââââââ
   var cards = [];
 
   // 1. LIFE INSURANCE
@@ -762,7 +788,7 @@
     noteClass: hasWaiver ? "good" : ""
   });
 
-  // ── RENDER CARDS ──────────────────────────────────────────────────
+  // ââ RENDER CARDS ââââââââââââââââââââââââââââââââââââââââââââââââââ
   var grid = document.getElementById("cards-grid");
   cards.forEach(function(card) {
     var badgeClass = card.badge === "have"   ? "badge-have"   :
@@ -801,7 +827,7 @@
     grid.innerHTML += html;
   });
 
-  // ── ADVISOR MESSAGE ───────────────────────────────────────────────
+  // ââ ADVISOR MESSAGE âââââââââââââââââââââââââââââââââââââââââââââââ
   var gapCards = cards.filter(function(c) { return c.badge === "gap"; }).length;
   var addonCards = cards.filter(function(c) { return c.badge === "addon"; }).length;
 

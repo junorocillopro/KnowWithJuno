@@ -514,15 +514,7 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
 
 <div class="container">
 
-  <!-- UNLOCK BANNER Ã¢ÂÂ peso gap is gated behind booking -->
-  <div style="background:#E6F4F4;border:1.5px solid #0D6B6E;border-radius:14px;padding:18px 22px;margin:28px 0 8px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-    <div style="font-size:28px;flex-shrink:0">&#128274;</div>
-    <div style="flex:1;min-width:200px">
-      <div style="font-size:15px;font-weight:700;color:#094B4D;margin-bottom:4px">Your exact peso coverage gap is in your Coverage Report.</div>
-      <div style="font-size:13px;color:#6B7280">Book a free 20-min Clarity Session with Juno Ã¢ÂÂ he'll walk you through the full number, what it means for your family, and the most cost-effective way to close it.</div>
-    </div>
-    <a href="https://calendly.com/junorocillo-pro/30min" target="_blank" style="display:inline-block;background:#E85D3A;color:#fff;font-size:14px;font-weight:700;padding:12px 22px;border-radius:50px;text-decoration:none;white-space:nowrap;flex-shrink:0">&#128197; Unlock My Report</a>
-  </div>
+  
 
   <div style="margin-top: 32px;">
     <p class="section-title">Your Benefit-by-Benefit Breakdown</p>
@@ -647,8 +639,8 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
   document.getElementById("risk-title").textContent = riskLabel;
   document.getElementById("risk-desc").textContent  = "Based on your income of approx. " + peso(monthlyIncome) + "/mo";
 
-  // Gap amount is locked Ã¢ÂÂ leads must book to get exact peso figure
-  document.getElementById("stat-gap").innerHTML = "<span style=\"font-size:14px;font-weight:700;color:#E85D3A\">&#128274; Locked</span>";
+  // Show full coverage gap amount
+  document.getElementById("stat-gap").textContent = gapAmt > 0 ? peso(gapAmt) : "—";
   document.getElementById("stat-pct").textContent   = pct + "%";
   document.getElementById("stat-years").textContent = years > 0 ? years + " yrs" : "TBD";
 

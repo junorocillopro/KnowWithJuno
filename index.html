@@ -1596,6 +1596,13 @@
   ];
 
   var gcStep=0,gcAnswers={},gcSliderVals={pct:40,years:10},gcOtpCode="",gcEmailVerified=true;
+  var gcAmReady=false,gcHashedEm="",gcHashedPh="",gcHashedFn="",gcHashedLn="";
+  function sha256Hex(str){
+    var enc=new TextEncoder().encode(str);
+    return crypto.subtle.digest('SHA-256',enc).then(function(buf){
+      return Array.prototype.map.call(new Uint8Array(buf),function(b){return b.toString(16).padStart(2,'0');}).join('');
+    });
+  }
 
   function gcActiveQs(){return questions.filter(function(q){return!q.cond||q.cond(gcAnswers);});}
 
@@ -1790,6 +1797,17 @@
     gcCapturedEmail=(document.getElementById("gc-email")||{}).value||"";
     gcCapturedPhone=(document.getElementById("gc-phone")||{}).value||"";
     gcCapturedDob=(document.getElementById("gc-dob")||{}).value||"";
+    gcAmReady=false;
+    if(gcCapturedEmail){
+      var _emailNorm=gcCapturedEmail.trim().toLowerCase();
+      var _phoneDigits=(gcCapturedPhone||"").replace(/\D/g,'');
+      if(_phoneDigits.length===11&&_phoneDigits.charAt(0)==='0'){_phoneDigits='63'+_phoneDigits.substring(1);}
+      var _fnameNorm=gcCapturedFname.trim().toLowerCase();
+      var _lnameNorm=gcCapturedLname.trim().toLowerCase();
+      Promise.all([sha256Hex(_emailNorm),sha256Hex(_phoneDigits),sha256Hex(_fnameNorm),sha256Hex(_lnameNorm)]).then(function(h){
+        gcHashedEm=h[0];gcHashedPh=h[1];gcHashedFn=h[2];gcHashedLn=h[3];gcAmReady=true;
+      }).catch(function(e){console.warn("Advanced Matching hash error:",e);});
+    }
     gcUpdateProg(90,100);
     document.getElementById("gc-prog-text").textContent="Analyzing\u2026";
     if(!sessionStorage.getItem("kwj_cd_start")){
@@ -1995,7 +2013,7 @@
         })
       }).then(function(r){
         console.log("Make webhook (GHL+Notion) submitted:",r.status);
-        if(r.ok&&typeof fbq==="function"){fbq("track","Lead",{"currency":"PHP","value":0},{eventID:_leadEid});}
+        if(r.ok&&typeof fbq==="function"){if(gcAmReady){fbq('init','2060863387858520',{em:gcHashedEm,ph:gcHashedPh,fn:gcHashedFn,ln:gcHashedLn});}fbq("track","Lead",{"currency":"PHP","value":0},{eventID:_leadEid});}
       }).catch(function(e){
         console.warn("Make webhook error:",e);
       });

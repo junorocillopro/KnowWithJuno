@@ -1595,7 +1595,7 @@
     ]}
   ];
 
-  var gcStep=0,gcAnswers={},gcSliderVals={pct:40,years:10},gcOtpCode="",gcEmailVerified=true;
+  var gcStep=0,gcAnswers={},gcSliderVals={pct:40,years:10},gcOtpCode="",gcEmailVerified=true,gcStartedFired=false;
   var gcAmReady=false,gcHashedEm="",gcHashedPh="",gcHashedFn="",gcHashedLn="";
   function sha256Hex(str){
     var enc=new TextEncoder().encode(str);
@@ -1726,7 +1726,7 @@
     if(el)el.innerHTML=val+"<span>"+unit+"</span>";
   };
 
-  window.gcNext=function(){
+  window.gcNext=function(){if(!gcStartedFired){gcStartedFired=true;if(typeof fbq==="function"){var _qsEid="qs_"+Date.now()+"_"+Math.random().toString(36).substr(2,9);fbq("trackCustom","QuizStarted",{},{eventID:_qsEid});}}
     var activeQs=gcActiveQs(),q=activeQs[gcStep];
     if(q&&q.type==="slider"&&gcAnswers[q.id]===undefined)gcAnswers[q.id]=gcSliderVals[q.id]||q.def;
     gcStep++;gcRender();

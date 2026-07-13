@@ -2013,7 +2013,7 @@
         })
       }).then(function(r){
         console.log("Make webhook (GHL+Notion) submitted:",r.status);
-        if(r.ok&&typeof fbq==="function"){if(gcAmReady){fbq('init','2060863387858520',{em:gcHashedEm,ph:gcHashedPh,fn:gcHashedFn,ln:gcHashedLn});}fbq("track","Lead",{"currency":"PHP","value":0},{eventID:_leadEid});}
+        if(r.ok&&typeof fbq==="function"){if(gcAmReady){fbq('init','2060863387858520',{em:gcHashedEm,ph:gcHashedPh,fn:gcHashedFn,ln:gcHashedLn});}fbq("track","Lead",{"currency":"PHP","value":0},{eventID:_leadEid});var _qcEid="qc_"+Date.now()+"_"+Math.random().toString(36).substr(2,9);fbq("trackCustom","QuizCompleted",{},{eventID:_qcEid});}
       }).catch(function(e){
         console.warn("Make webhook error:",e);
       });

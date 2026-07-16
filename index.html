@@ -1662,7 +1662,7 @@
       var val=gcSliderVals[q.id]!==undefined?gcSliderVals[q.id]:q.def;
       gcAnswers[q.id]=val;
       html+="<div class=\"gc-slider-wrap\"><div class=\"gc-slider-val\" id=\"gc-sv-"+q.id+"\">"+val+"<span>"+q.unit+"</span></div>"
-        +"<input type=\"range\" class=\"gc-slider\" min=\""+q.min+"\" max=\""+q.max+"\" step=\"1\" value=\""+val+"\" oninput=\"gcSlider('"+q.id+"',this.value,'"+q.unit+"')\">"
+ <input type=\"email\" id=\"gc-email\" placeholder=\"juan@email.com\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"><div id=\"gc-email-error\" style=\"display:none;color:#c0392b;font-size:11px;margin-top:4px;\">Please enter a valid email address (e.g. juan@email.com).</div></div>       +"<input type=\"range\" class=\"gc-slider\" min=\""+q.min+"\" max=\""+q.max+"\" step=\"1\" value=\""+val+"\" oninput=\"gcSlider('"+q.id+"',this.value,'"+q.unit+"')\">"
         +"<div class=\"gc-slider-labels\"><span>"+q.min+q.unit+"</span><span>"+q.max+q.unit+"</span></div></div>";
     }
     var isLast=idx===total-1;
@@ -1743,7 +1743,7 @@
     var f=document.getElementById("gc-fname"),l=document.getElementById("gc-lname"),
         d=document.getElementById("gc-dob"),p=document.getElementById("gc-phone"),
         e=document.getElementById("gc-email"),btn=document.getElementById("gc-btn-submit");
-    if(btn)btn.disabled=!(f&&f.value&&p&&p.value);
+    var gcEmailOk=e&&e.value&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.value.trim());var gcErrEl=document.getElementById("gc-email-error");if(gcErrEl)gcErrEl.style.display=(e&&e.value&&!gcEmailOk)?"block":"none";if(btn)btn.disabled=!(f&&f.value&&l&&l.value&&d&&d.value&&p&&p.value&&gcEmailOk);
   };
 
   window.gcSendOTP=function(){

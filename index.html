@@ -1880,7 +1880,16 @@
     var existing=0;
     var cov=gcAnswers.coverage||[];
     if(cov.indexOf("none")<0)cov.forEach(function(c){existing+=covMap[c]||0;});
-    var gap=Math.max(totalNeed-existing,500000);
+    var annualNeed = income*pct*12;
+      var yrsN       = Number(yrs) || 0;
+      var protYears  = annualNeed>0 ? Math.max(0, existing/annualNeed) : 0;
+      var shortYears = Math.max(0, yrsN - protYears);
+      var kwjDur = function(v){ var y=Math.floor(v), m=Math.round((v-y)*12); if(m===12){ y+=1; m=0; } if(y===0&&m===0) return "0 mos"; if(m===0) return y+" yrs"; if(y===0) return m+" mos"; return y+" yrs "+m+" mos"; };
+      var protText   = kwjDur(protYears);
+      var protNext   = Math.ceil(protYears);
+      var shortText  = kwjDur(shortYears);
+      var covState   = protYears<=0 ? "none" : (protYears>=yrsN ? "full" : "partial");
+      var gap=Math.max(totalNeed-existing,500000);
     var covHas=cov.indexOf("none")>=0?[]:cov;
 
     var protPct,protLabel,protBg,protFg,protDesc;
@@ -1944,7 +1953,7 @@
       +"<div class=\"prot-top-label\">Your Coverage Snapshot</div>"
       +"<div style=\"display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--border)\"><span style=\"font-size:14px;color:#1a1a1a\">Protection Level</span><span style=\"font-size:15px;font-weight:700;color:"+protFg+"\">"+protLabel+"</span></div>"
       +"<div style=\"display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--border)\"><span style=\"font-size:14px;color:#1a1a1a\">Coverage Gap</span><span style=\"font-size:19px;font-weight:700;color:var(--orange)\">"+gcFmt(gap)+"</span></div>"
-      +"<div style=\"display:flex;justify-content:space-between;align-items:center;padding:10px 0\"><span style=\"font-size:14px;color:#1a1a1a\">Years your family stays protected</span><span style=\"font-size:15px;font-weight:700;color:var(--ink)\">"+(((income*pct*12)>0)?Math.max(0,Math.round(existing/(income*pct*12))):0)+" yrs</span></div>"
+      +"<div style=\"display:flex;justify-content:space-between;align-items:center;padding:10px 0\"><span style=\"font-size:14px;color:#1a1a1a\">Years your family stays protected</span><span style=\"font-size:15px;font-weight:700;color:var(--ink)\">"+protText+"</span></div>"
       +"</div>"
       +"<h4 style=\"font-family:'Bricolage Grotesque', 'Georgia', serif;font-size:18px;font-weight:700;color:var(--ink);margin:24px 0 4px\">"
       +"Benefits identified <span style=\"color:var(--orange)\">for your profile:</span></h4>"
@@ -1997,7 +2006,7 @@
       var dob=gcCapturedDob;
       var gapBenNames=gapBens.map(function(b){return b.title;}).join(", ");
 
-      var reportParams=new URLSearchParams({
+      var reportParams=new URLSearchParams({prot: protYears.toFixed(2), 
         n:   fname,
         g:   gap,
         inc: gcAnswers.income||'50k',
@@ -2037,6 +2046,11 @@
           ci_amount:            gcAnswers.ci_amount     || "not answered",
           biggest_concern:      gcAnswers.concern       || "—",
           timeline:             gcAnswers.timeline      || "—",
+          years_protected_text: protText,
+          years_protected_next: protNext,
+          years_shortfall:      shortYears.toFixed(1),
+          years_shortfall_text: shortText,
+          coverage_state:       covState,
           report_url:           reportURL,
           ghl_webhook:          "https://services.leadconnectorhq.com/hooks/6lEenrcBXwWIApevAjz4/webhook-trigger/1a527a88-9a5b-4c32-a3c3-9bdfead03c56",
           risk_label:           protLabel,

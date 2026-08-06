@@ -1884,12 +1884,12 @@
       var yrsN       = Number(yrs) || 0;
       var protYears  = annualNeed>0 ? Math.max(0, existing/annualNeed) : 0;
       var shortYears = Math.max(0, yrsN - protYears);
-      var kwjDur = function(v){ var y=Math.floor(v), m=Math.round((v-y)*12); if(m===12){ y+=1; m=0; } if(y===0&&m===0) return "None"; if(m===0) return y+" yrs"; if(y===0) return m+" mos"; return y+" yrs "+m+" mos"; };
+      var kwjDur = function(v){ var y=Math.floor(v), m=Math.round((v-y)*12); if(m===12){ y+=1; m=0; } if(y===0&&m===0) return "None"; var ys=y+(y===1?" yr":" yrs"), ms=m+(m===1?" mo":" mos"); if(m===0) return ys; if(y===0) return ms; return ys+" "+ms; };
       var protText   = kwjDur(protYears);
       var protNext   = Math.ceil(protYears);
       var shortText  = kwjDur(shortYears);
       var covState   = protYears<=0 ? "none" : (protYears>=yrsN ? "full" : "partial");
-      var gap=Math.max(totalNeed-existing,500000);
+      var gap=Math.max(totalNeed-existing,0);
     var covHas=cov.indexOf("none")>=0?[]:cov;
 
     var protPct,protLabel,protBg,protFg,protDesc;

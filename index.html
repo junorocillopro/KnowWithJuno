@@ -2058,6 +2058,7 @@
           years_shortfall:      shortYears.toFixed(1),
           years_shortfall_text: shortText,
           coverage_state:       covState,
+          traffic_source:       (function(){var p=new URLSearchParams(location.search);var s=p.get("utm_source")||"",cp=p.get("utm_campaign")||"",ct=p.get("utm_content")||"";var v=[s,cp,ct].filter(Boolean).join(" | ");return v||"direct";})(),
           report_url:           reportURL,
           ghl_webhook:          "https://services.leadconnectorhq.com/hooks/6lEenrcBXwWIApevAjz4/webhook-trigger/1a527a88-9a5b-4c32-a3c3-9bdfead03c56",
           risk_label:           protLabel,

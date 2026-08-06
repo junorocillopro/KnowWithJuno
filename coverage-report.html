@@ -564,6 +564,8 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
   var gapRaw      = params.get("g")   || "0";
   var incomeKey   = params.get("inc") || "50k";
   var pctRaw      = params.get("pct") || "40";
+  var protRaw = params.get("prot");
+  var kwjDur = function(v){ var y=Math.floor(v), m=Math.round((v-y)*12); if(m===12){ y+=1; m=0; } if(y===0&&m===0) return "0 mos"; if(m===0) return y+" yrs"; if(y===0) return m+" mos"; return y+" yrs "+m+" mos"; };
   var yearsRaw    = params.get("y")   || "0";
   var covRaw      = params.get("cov") || "";
   var riskLabel   = params.get("rl")  || "Moderately Exposed";
@@ -636,7 +638,7 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
   // Show full coverage gap amount
   document.getElementById("stat-gap").textContent = gapAmt > 0 ? peso(gapAmt) : "—";
   document.getElementById("stat-pct").textContent   = pct + "%";
-  document.getElementById("stat-years").textContent = years > 0 ? years + " yrs" : "TBD";
+  document.getElementById("stat-years").textContent = (protRaw && !isNaN(parseFloat(protRaw))) ? kwjDur(parseFloat(protRaw)) : "—";
 
   // Ã¢ÂÂÃ¢ÂÂ COVERAGE AMOUNTS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
   var lifeIdeal   = annualIncome * 10;   // 10x annual

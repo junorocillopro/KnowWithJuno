@@ -2106,5 +2106,27 @@
 
 
 <script>function junoBio(){var b=document.getElementById("juno-bio");if(b){b.remove();return;}var d=document.createElement("div");d.id="juno-bio";d.onclick=function(){d.remove();};d.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;display:flex;align-items:center;justify-content:center;padding:24px";d.innerHTML="<div style=\"background:#fff;border-radius:16px;max-width:340px;padding:26px;line-height:1.6;color:#1a1a1a;text-align:left\"><img src=\"image-1.webp\" style=\"width:64px;height:64px;border-radius:50%;display:block;margin-bottom:14px\"><div style=\"font-weight:700;font-size:18px\">Juno Rocillo</div><div style=\"font-size:13px;color:#666;margin-bottom:16px\">Financial Adviser &middot; FWD Life Insurance Philippines</div><p style=\"font-size:14px;margin:0 0 10px\">I've been a financial adviser for 11 years. My approach is simple: I help people understand how much their family would actually need &mdash; not just in pesos, but in years.</p><p style=\"font-size:14px;margin:0\">The Coverage Gap is where that conversation starts.</p><div style=\"margin-top:18px;font-size:12px;color:#999\">Tap anywhere to close</div></div>";document.body.appendChild(d);}(function(){var g=document.getElementById("gc-body");if(g)g.style.scrollMarginTop="90px";})();</script>
+<script>
+/* kwjQuizEvents - Clarity funnel instrumentation. Observation only. */
+(function kwjQuizEvents(){
+  var qn=0, started=false, done=false, details=false;
+  function ev(n){ try{ if(window.clarity) window.clarity("event", n); }catch(e){} }
+  function wrap(name, cb){
+    var o=window[name];
+    if(typeof o!=="function" || o.__kwj) return false;
+    var w=function(){ try{ cb(); }catch(e){} return o.apply(this, arguments); };
+    w.__kwj=1; window[name]=w; return true;
+  }
+  function install(){
+    var a=wrap("gcPick", function(){ if(!started){ started=true; ev("quiz_start"); } });
+    var b=wrap("gcNext", function(){ if(!started){ started=true; ev("quiz_start"); } qn++; if(qn<=12) ev("quiz_q"+qn); });
+    var c=wrap("gcCheckPersonal", function(){ if(!details){ details=true; ev("quiz_details"); } });
+    var e=wrap("gcShowResults", function(){ if(!done){ done=true; ev("quiz_complete"); } });
+    return a||b||c||e;
+  }
+  var n=0, t=setInterval(function(){ n++; if(install()||n>40) clearInterval(t); }, 250);
+  install();
+})();
+</script>
 </body>
 </html>

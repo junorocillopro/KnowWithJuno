@@ -1302,7 +1302,7 @@
     <div style="text-align:center;margin-bottom:40px;">
       <div class="section-label">Free Coverage Gap Quiz</div>
       <h2 style="margin-bottom:10px;">Find your <em>coverage gap</em> now</h2>
-      <p class="section-p" style="max-width:480px;margin:0 auto;font-size:15px;">A few quick questions. Instant results. Your personalized coverage report — sent free to your email. <span style="display:block;margin-top:6px;font-style:italic;color:var(--gray);font-size:13.5px;">The test comes first — always. A conversation only happens after you’ve seen your results — and only if you want one.</span></p>
+      
       
     </div>
 
@@ -1319,6 +1319,7 @@
     <div id="gc-body"></div>
 
   </div>
+      <p class="section-p" style="margin-top:22px;text-align:center"><span style="display:block;margin-top:6px;font-style:italic;color:var(--gray);font-size:13.5px;">The test comes first — always. A conversation only happens after you’ve seen your results — and only if you want one.</span></p>
 </section>
 
 <!-- ─── PAIN POINTS ─── -->
@@ -1655,7 +1656,7 @@
     var fill=document.getElementById("gc-prog-fill");
     var txt=document.getElementById("gc-prog-text");
     if(fill)fill.style.width=pct+"%";
-    if(txt)txt.textContent=cur<=tot?"Question "+cur:"Your details";
+    if(txt)txt.textContent=cur<=tot?"Question " + cur + " of " + tot:"Your details";
   }
 
   function gcRender(){
@@ -2126,6 +2127,23 @@
   }
   var n=0, t=setInterval(function(){ n++; if(install()||n>40) clearInterval(t); }, 250);
   install();
+})();
+</script>
+
+<script>
+/* KWJ: hide header CTA while the quiz is on screen */
+(function(){
+  function init(){
+    var cta=document.querySelector("a.nav-cta"), q=document.getElementById("gc-body");
+    if(!cta||!q||!("IntersectionObserver" in window)) return;
+    var io=new IntersectionObserver(function(entries){
+      var on=entries[0].isIntersecting;
+      cta.style.visibility = on ? "hidden" : "";
+      cta.style.pointerEvents = on ? "none" : "";
+    },{threshold:0});
+    io.observe(q);
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();
 })();
 </script>
 </body>

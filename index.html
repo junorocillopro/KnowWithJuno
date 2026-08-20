@@ -630,7 +630,7 @@
       transition: background 0.2s, transform 0.15s;
     }
     .btn-next:hover { background: var(--teal-d); transform: translateY(-1px); }
-    .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .btn-next:disabled {pointer-events:none; opacity: 0.4; cursor: not-allowed; transform: none; }
 
     /* ─── RESULT SCREEN ─── */
     .calc-result { display: none; padding: 0; }
@@ -2144,6 +2144,30 @@
     io.observe(q);
   }
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",init); else init();
+})();
+</script>
+
+<script>
+/* KWJ: bring the question into view when advancing or going back */
+(function(){
+  function scrollQ(){
+    try{
+      var el=document.getElementById("gc-body"); if(!el) return;
+      var hdr=document.querySelector("header");
+      var off=(hdr?hdr.getBoundingClientRect().height:0)+12;
+      var y=el.getBoundingClientRect().top+window.pageYOffset-off;
+      window.scrollTo({top:(y<0?0:y),left:0,behavior:"instant"});
+    }catch(e){}
+  }
+  function wrap(name){
+    var o=window[name];
+    if(typeof o!=="function"||o.__kwjScroll) return false;
+    var w=function(){ var r=o.apply(this,arguments); setTimeout(scrollQ,0); return r; };
+    w.__kwjScroll=1; window[name]=w; return true;
+  }
+  function install(){ var a=wrap("gcNext"), b=wrap("gcBack"); return a||b; }
+  var n=0, t=setInterval(function(){ n++; if(install()||n>40) clearInterval(t); },250);
+  install();
 })();
 </script>
 </body>

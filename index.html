@@ -2153,8 +2153,8 @@
   function scrollQ(){
     try{
       var el=document.getElementById("gc-body"); if(!el) return;
-      var hdr=document.querySelector("header");
-      var off=(hdr?hdr.getBoundingClientRect().height:0)+12;
+      var hdr=document.querySelector("nav")||document.querySelector("header");
+      var off=(hdr?hdr.getBoundingClientRect().height:64)+16;
       var y=el.getBoundingClientRect().top+window.pageYOffset-off;
       window.scrollTo({top:(y<0?0:y),left:0,behavior:"instant"});
     }catch(e){}

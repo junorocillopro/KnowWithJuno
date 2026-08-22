@@ -2170,27 +2170,59 @@
   install();
 })();
 </script>
-<!-- KWJ-FORM-3FIELD -->
+<!-- KWJ-FORM-4FIELD -->
 <script>
 (function(){
- function hide(id){ var el=document.getElementById(id); if(!el) return; var w=el.parentElement; if(w && w.tagName==="DIV") w.style.display="none"; }
+ function wrap(id){ var e=document.getElementById(id); return (e&&e.parentElement&&e.parentElement.tagName==="DIV")?e.parentElement:null; }
  function check(){
-  var f=document.getElementById("gc-fname"), d=document.getElementById("gc-dob"),
-      e=document.getElementById("gc-email"), b=document.getElementById("gc-btn-submit");
+  var f=document.getElementById("gc-fname"), l=document.getElementById("gc-lname"),
+      d=document.getElementById("gc-dob"), e=document.getElementById("gc-email"),
+      b=document.getElementById("gc-btn-submit");
   if(!b) return;
   var val=((e&&e.value)||"").trim();
   var ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
   var err=document.getElementById("gc-email-error");
   if(err) err.style.display=(val && !ok) ? "" : "none";
-  var nameOk=!!(f && f.value && f.value.trim());
-  var dobOk=!!(d && d.value);
-  b.disabled=!(nameOk && dobOk && ok);
+  b.disabled=!(f&&f.value.trim() && l&&l.value.trim() && d&&d.value && ok);
+ }
+ function buildDob(){
+  var d=document.getElementById("gc-dob");
+  if(!d || d.__kwjDob) return;
+  d.__kwjDob=1;
+  var ref=document.getElementById("gc-email");
+  var cs=ref?window.getComputedStyle(ref):null;
+  var css="flex:1;min-width:0;"+(cs?("padding:"+cs.padding+";border:"+cs.border+";border-radius:"+cs.borderRadius+";font-size:"+cs.fontSize+";color:"+cs.color+";background:"+cs.backgroundColor+";font-family:"+cs.fontFamily+";"):"");
+  function mk(ph,opts){
+   var s=document.createElement("select"); s.style.cssText=css;
+   var z=document.createElement("option"); z.value=""; z.textContent=ph; s.appendChild(z);
+   opts.forEach(function(o){ var x=document.createElement("option"); x.value=o[0]; x.textContent=o[1]; s.appendChild(x); });
+   return s;
+  }
+  function pad(n){ return (n<10?"0":"")+n; }
+  var M=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var mo=[], da=[], yr=[], i, now=new Date().getFullYear();
+  for(i=0;i<12;i++) mo.push([pad(i+1),M[i]]);
+  for(i=1;i<=31;i++) da.push([pad(i),String(i)]);
+  for(i=now-18;i>=now-80;i--) yr.push([String(i),String(i)]);
+  var mm=mk("Month",mo), dd=mk("Day",da), yy=mk("Year",yr);
+  var host=document.createElement("div");
+  host.style.cssText="display:flex;gap:8px;width:100%;";
+  host.appendChild(mm); host.appendChild(dd); host.appendChild(yy);
+  d.type="hidden";
+  d.parentNode.insertBefore(host, d.nextSibling);
+  function sync(){
+   d.value=(yy.value&&mm.value&&dd.value)?(yy.value+"-"+mm.value+"-"+dd.value):"";
+   check();
+  }
+  [mm,dd,yy].forEach(function(x){ x.addEventListener("change",sync); });
  }
  function apply(){
   if(!document.getElementById("gc-fname")) return false;
-  hide("gc-lname"); hide("gc-phone");
+  var p=wrap("gc-phone"); if(p) p.style.display="none";
+  var l=wrap("gc-lname"); if(l) l.style.display="";
+  buildDob();
   window.gcCheckPersonal=check;
-  ["gc-fname","gc-dob","gc-email"].forEach(function(id){
+  ["gc-fname","gc-lname","gc-email"].forEach(function(id){
    var el=document.getElementById(id);
    if(el && !el.__kwjBound){ el.__kwjBound=1; el.addEventListener("input",check); el.addEventListener("change",check); }
   });

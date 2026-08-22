@@ -546,9 +546,9 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
   </div>
 
   <div class="cta-block">
-    <h3>Ready to Close Your Gaps?</h3>
-    <p>Book a free 30-minute strategy call and get a tailored plan that fits your income, your family, and your goals.</p>
-    <a class="cta-btn" href="https://calendly.com/junorocillo-pro/30min" target="_blank" onclick="if(typeof fbq==='function'){fbq('track','Schedule',{currency:'PHP',value:0});}">&#128197; Schedule My Free Call</a>
+    <h3>Your Coverage Gap Review</h3>
+    <p>30 minutes, on Zoom or a call. We walk through how your gap was computed, what to prioritise first, and what your options are - your numbers, not a presentation. If your coverage already turns out to be enough, I'll tell you. That's good news. What you do next is entirely up to you.</p>
+    <a class="cta-btn" href="https://calendly.com/junorocillo-pro/30min" target="_blank" onclick="if(typeof fbq==='function'){fbq('track','Schedule',{currency:'PHP',value:0});}">&#128197; Book My Coverage Gap Review</a>
   </div>
 
   <p style="font-size: 12px; color: #9CA3AF; text-align: center; max-width: 560px; margin: 0 auto;">
@@ -858,6 +858,33 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
     return "<p style=\"margin-bottom:10px\">" + l + "</p>";
   }).join("");
 
+})();
+</script>
+<!-- KWJ-REVIEW-BRIDGE -->
+<script>
+(function(){
+ function ev(){ try{ if(typeof clarity==="function") clarity("event","review_cta_click"); }catch(e){} }
+ function go(){
+  var all=document.getElementsByTagName("a"), links=[];
+  for(var i=0;i<all.length;i++){ if((all[i].getAttribute("href")||"").indexOf("calend")>-1) links.push(all[i]); }
+  if(!links.length) return;
+  for(var j=0;j<links.length;j++) links[j].addEventListener("click",ev);
+  if(document.getElementById("kwj-cta-top")) return;
+  var host=null, nodes=document.querySelectorAll("section,div");
+  for(var k=0;k<nodes.length;k++){ var t=nodes[k].textContent||""; if(t.indexOf("Years Protected")>-1 && t.length<600) host=nodes[k]; }
+  if(!host||!host.parentNode) return;
+  var wrap=document.createElement("div");
+  wrap.id="kwj-cta-top";
+  wrap.style.cssText="text-align:center;margin:28px auto 8px;";
+  var btn=links[0].cloneNode(true);
+  btn.removeAttribute("id");
+  btn.textContent="Book My Coverage Gap Review";
+  btn.addEventListener("click",function(){ ev(); try{ if(typeof fbq==="function") fbq("track","Schedule"); }catch(e){} });
+  wrap.appendChild(btn);
+  host.parentNode.insertBefore(wrap,host.nextSibling);
+ }
+ if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",function(){setTimeout(go,400);});
+ else setTimeout(go,400);
 })();
 </script>
 </body>

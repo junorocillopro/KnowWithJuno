@@ -2170,5 +2170,35 @@
   install();
 })();
 </script>
+<!-- KWJ-FORM-3FIELD -->
+<script>
+(function(){
+ function hide(id){ var el=document.getElementById(id); if(!el) return; var w=el.parentElement; if(w && w.tagName==="DIV") w.style.display="none"; }
+ function check(){
+  var f=document.getElementById("gc-fname"), d=document.getElementById("gc-dob"),
+      e=document.getElementById("gc-email"), b=document.getElementById("gc-btn-submit");
+  if(!b) return;
+  var val=((e&&e.value)||"").trim();
+  var ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  var err=document.getElementById("gc-email-error");
+  if(err) err.style.display=(val && !ok) ? "" : "none";
+  var nameOk=!!(f && f.value && f.value.trim());
+  var dobOk=!!(d && d.value);
+  b.disabled=!(nameOk && dobOk && ok);
+ }
+ function apply(){
+  if(!document.getElementById("gc-fname")) return false;
+  hide("gc-lname"); hide("gc-phone");
+  window.gcCheckPersonal=check;
+  ["gc-fname","gc-dob","gc-email"].forEach(function(id){
+   var el=document.getElementById(id);
+   if(el && !el.__kwjBound){ el.__kwjBound=1; el.addEventListener("input",check); el.addEventListener("change",check); }
+  });
+  check();
+  return true;
+ }
+ var n=0, t=setInterval(function(){ n++; if(apply()||n>200) clearInterval(t); },300);
+})();
+</script>
 </body>
 </html>

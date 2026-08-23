@@ -1889,6 +1889,18 @@
     var existing=0;
     var cov=gcAnswers.coverage||[];
     if(cov.indexOf("none")<0)cov.forEach(function(c){existing+=covMap[c]||0;});
+      /* KWJ-AMT-MIDPOINT: credit the coverage amount the person actually reported,
+         not a flat per-policy assumption. Band midpoints. "unsure" falls back to covMap. */
+      (function(){
+        var AMT = { "lt500k":250000, "500k_1m":750000, "1m_2m":1500000, "2m_plus":2500000 };
+        if (cov.indexOf("life") > -1 && AMT[gcAnswers.life_amount] != null) {
+          existing = existing - covMap.life + AMT[gcAnswers.life_amount];
+        }
+        if (cov.indexOf("ci") > -1 && AMT[gcAnswers.ci_amount] != null) {
+          existing = existing - covMap.ci + AMT[gcAnswers.ci_amount];
+        }
+        if (existing < 0) existing = 0;
+      })();
     var annualNeed = income*pct*12;
       var yrsN       = Number(yrs) || 0;
       var protYears  = annualNeed>0 ? Math.max(0, existing/annualNeed) : 0;

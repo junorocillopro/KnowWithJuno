@@ -887,17 +887,27 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
  else setTimeout(go,400);
 })();
 </script>
-<!-- KWJ-NOT-INCLUDED -->
+<!-- KWJ-BASICS-NOTE -->
 <script>
 (function(){
+ function lead(){
+  var rl="";
+  try{ rl=(new URLSearchParams(window.location.search).get("rl")||""); }catch(e){}
+  var good=/good|well protected|sufficient/i.test(rl);
+  return good
+   ? "Yes — you are on the right track. But every situation is different."
+   : "This points to a gap worth closing. But every situation is different.";
+ }
  function go(){
-  if(document.getElementById("kwj-not-included")) return true;
+  if(document.getElementById("kwj-basics")) return true;
   var blocks=document.querySelectorAll(".cta-block");
   var host=blocks.length?blocks[blocks.length-1]:null;
   if(!host||!host.parentNode) return false;
   var d=document.createElement("div");
-  d.innerHTML="<section id=\"kwj-not-included\" style=\"max-width:760px;margin:36px auto;padding:26px 28px;background:#f7f9fc;border:1px solid #e2e8f0;border-radius:12px;\"><h3 style=\"margin:0 0 8px;font-size:20px;color:#0a3d62;\">What this number does not include yet</h3><p style=\"margin:0 0 8px;color:#475569;font-size:15px;line-height:1.6;\">Your gap above covers one thing — replacing your income for the years your family depends on you. A full Coverage Gap Review looks at five more.</p><div style=\"padding:16px 0;border-top:1px solid #e2e8f0;\"><div style=\"font-weight:700;color:#0a3d62;font-size:16px;margin-bottom:5px;\">Final expenses</div><div style=\"color:#475569;font-size:14.5px;line-height:1.65;\">A standard three-day wake and burial runs ₱60,000 to ₱150,000. The SSS funeral benefit covers ₱12,000 to ₱60,000 of it, depending on your contributions. Your family pays the difference in the same week they lose you.</div></div><div style=\"padding:16px 0;border-top:1px solid #e2e8f0;\"><div style=\"font-weight:700;color:#0a3d62;font-size:16px;margin-bottom:5px;\">Outstanding debt</div><div style=\"color:#475569;font-size:14.5px;line-height:1.65;\">Housing loans, auto loans, credit cards, salary loans. These do not disappear. They are settled out of your estate before anything reaches your family.</div></div><div style=\"padding:16px 0;border-top:1px solid #e2e8f0;\"><div style=\"font-weight:700;color:#0a3d62;font-size:16px;margin-bottom:5px;\">Your children’s education</div><div style=\"color:#475569;font-size:14.5px;line-height:1.65;\">A four-year degree runs from around ₱150,000 at a state university to over ₱2,000,000 at a private one. If you are planning for children, that sits entirely outside this calculation.</div></div><div style=\"padding:16px 0;border-top:1px solid #e2e8f0;\"><div style=\"font-weight:700;color:#0a3d62;font-size:16px;margin-bottom:5px;\">Estate tax and access</div><div style=\"color:#475569;font-size:14.5px;line-height:1.65;\">Estates are taxed at a flat 6 percent, and heirs usually cannot touch assets until it is settled. Life insurance is the exception — proceeds are excluded from the taxable estate only when the beneficiary designation is expressly irrevocable. Most designations are revocable by default, and most people do not know which theirs is.</div></div><div style=\"padding:16px 0;border-top:1px solid #e2e8f0;\"><div style=\"font-weight:700;color:#0a3d62;font-size:16px;margin-bottom:5px;\">Your own retirement</div><div style=\"color:#475569;font-size:14.5px;line-height:1.65;\">Everything above assumes something happens to you. If nothing does, the SSS pension starts at ₱1,000 to ₱2,400 a month. For most breadwinners that gap is larger than the protection one — and it is the one you will live to see.</div></div><p style=\"margin:18px 0 0;padding-top:16px;border-top:1px solid #e2e8f0;color:#0a3d62;font-size:15px;font-weight:600;\">None of these are in the number above. That is what the Review is for.</p></section>";
+  d.innerHTML="<section id=\"kwj-basics\" style=\"max-width:720px;margin:34px auto;padding:22px 26px;background:#f7f9fc;border-left:4px solid #0a3d62;border-radius:8px;\"><h3 style=\"margin:0 0 10px;font-size:18px;color:#0a3d62;\">The Coverage Gap Quiz covers the basics</h3><p id=\"kwj-basics-lead\" style=\"margin:0 0 10px;color:#334155;font-size:15px;line-height:1.65;\"></p><p style=\"margin:0;color:#475569;font-size:15px;line-height:1.65;\">Financial planning is broader than one number — the right retirement amount for you, a college fund if you are a parent, outstanding loans, how your family manages the first few weeks. Those depend on your situation, and they are worth a conversation.</p></section>";
   host.parentNode.insertBefore(d.firstChild, host);
+  var p=document.getElementById("kwj-basics-lead");
+  if(p) p.textContent=lead();
   return true;
  }
  var n=0,t=setInterval(function(){ n++; if(go()||n>120) clearInterval(t); },300);

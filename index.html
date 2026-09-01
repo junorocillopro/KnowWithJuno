@@ -1703,14 +1703,43 @@
     return html;
   }
 
-  function gcPersonalForm(){
+  /* KWJ-GAPCHIPS: judge income replacement on the AMOUNT held vs the amount
+     needed, not on whether the box was ticked. Mirrors the calculator in
+     gcShowResults exactly so the two can never disagree. */
+  function gcNeedState(){
     var cov=gcAnswers.coverage||[];
     var has=(cov.indexOf("none")>=0)?[]:cov;
+    var monthlyNeed=Number(gcAnswers.monthly_need)||0;
+    var yrs=Number(gcAnswers.years)||10;
+    var totalNeed=monthlyNeed*12*yrs;
+    var covMap={life:1000000,ci:500000,hmo:200000,vul:750000,emergency:300000};
+    var AMT={"lt500k":250000,"500k_1m":750000,"1m_2m":1500000,"2m_plus":2500000};
+    var existing=0;
+    has.forEach(function(c){existing+=covMap[c]||0;});
+    if(has.indexOf("life")>-1 && AMT[gcAnswers.life_amount]!=null){
+      existing=existing-covMap.life+AMT[gcAnswers.life_amount];
+    }
+    if(has.indexOf("ci")>-1 && AMT[gcAnswers.ci_amount]!=null){
+      existing=existing-covMap.ci+AMT[gcAnswers.ci_amount];
+    }
+    if(existing<0)existing=0;
+    return {has:has,totalNeed:totalNeed,existing:existing,
+            gap:Math.max(totalNeed-existing,0)};
+  }
+
+  function gcPersonalForm(){
+    var st=gcNeedState();
+    var has=st.has;
     var order=["life","ci","hmo","vul","emergency"];
     var names={life:"Income replacement",ci:"Critical illness",hmo:"Health cover",vul:"Long-term savings",emergency:"Emergency fund"};
-    var gapN=order.filter(function(b){return has.indexOf(b)<0;}).length;
+    function gcChipMissing(b){
+      /* life: covered only when what they hold actually meets the need */
+      if(b==="life") return st.totalNeed>0 ? st.gap>0 : has.indexOf("life")<0;
+      return has.indexOf(b)<0;
+    }
+    var gapN=order.filter(gcChipMissing).length;
     var chips=order.map(function(b){
-      var missing=has.indexOf(b)<0;
+      var missing=gcChipMissing(b);
       return "<span style=\"display:inline-block;padding:6px 11px;margin:3px 5px 3px 0;border-radius:14px;font-size:12.5px;font-weight:600;"
         +(missing?"background:#FEE2E2;color:#B91C1C":"background:#F0FFF4;color:#15803D")+"\">"+names[b]+"</span>";
     }).join("");

@@ -2166,10 +2166,15 @@
   var qn=0, started=false, done=false, details=false;
   function ev(n){ try{ if(window.clarity) window.clarity("event", n); }catch(e){} }
   function wrap(name, cb){
+    /* KWJ-WRAPONCE: the marker must live in a shared registry, not on the
+       wrapper. Two scripts wrap gcNext; whichever wraps second hides the
+       other's flag, and the loser's re-install interval then wraps again,
+       double-counting every quiz_qN. Registry keys are per-script. */
     var o=window[name];
-    if(typeof o!=="function" || o.__kwj) return false;
+    var reg=window.__kwjWrapped=window.__kwjWrapped||{};
+    if(typeof o!=="function" || reg["ev:"+name]) return false;
     var w=function(){ try{ cb(); }catch(e){} return o.apply(this, arguments); };
-    w.__kwj=1; window[name]=w; return true;
+    w.__kwj=1; reg["ev:"+name]=1; window[name]=w; return true;
   }
   function install(){
     var a=wrap("gcPick", function(){ if(!started){ started=true; ev("quiz_start"); } });
@@ -2213,10 +2218,12 @@
     }catch(e){}
   }
   function wrap(name){
+    /* KWJ-WRAPONCE: see note in the Clarity script. Shared registry, own key. */
     var o=window[name];
-    if(typeof o!=="function"||o.__kwjScroll) return false;
+    var reg=window.__kwjWrapped=window.__kwjWrapped||{};
+    if(typeof o!=="function"||reg["scroll:"+name]) return false;
     var w=function(){ var r=o.apply(this,arguments); setTimeout(scrollQ,0); return r; };
-    w.__kwjScroll=1; window[name]=w; return true;
+    w.__kwjScroll=1; reg["scroll:"+name]=1; window[name]=w; return true;
   }
   function install(){ var a=wrap("gcNext"), b=wrap("gcBack"); return a||b; }
   var n=0, t=setInterval(function(){ n++; if(install()||n>40) clearInterval(t); },250);

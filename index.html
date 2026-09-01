@@ -1979,7 +1979,13 @@
       {id:"vul",icon:"\uD83D\uDCB0",title:"Long-term Savings / VUL",
        desc:"Protection that grows with you. A VUL plan builds wealth while keeping your family covered \u2014 no separate investment account needed."}
     ];
-    var gapBens=allBens.filter(function(b){return covHas.indexOf(b.id)<0;});
+    /* KWJ-GAPBENS: life counts as a gap when the AMOUNT held falls short,
+       not merely when the box was left unticked. Same rule as the reveal
+       chips, so the results screen, the email and Notion cannot disagree. */
+    var gapBens=allBens.filter(function(b){
+      if(b.id==="life") return totalNeed>0 ? gap>0 : covHas.indexOf("life")<0;
+      return covHas.indexOf(b.id)<0;
+    });
     var gapCount=gapBens.length;
 
     var benefitHTML="";
@@ -2068,8 +2074,8 @@
       var reportParams=new URLSearchParams({prot: protYears.toFixed(2), 
         n:   fname,
         g:   gap,
-        inc: gcAnswers.income||'50k',
-        pct: Math.round((gcAnswers.pct||40)),
+        mn:  String(monthlyNeed),
+        ex:  String(existing),
         y:   yrs,
         cov: (gcAnswers.coverage||[]).join(','),
         rl:  protLabel,

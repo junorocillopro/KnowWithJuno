@@ -572,6 +572,13 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
   var gapRaw      = params.get("g")   || "0";
   var incomeKey   = params.get("inc") || "50k";
   var pctRaw      = params.get("pct") || "40";
+  /* KWJ-REALNUM: quiz v2 sends the real monthly need (mn) and the real
+     existing cover (ex). The old income band and % slider no longer exist,
+     so inc/pct would otherwise fall back to a fabricated 50k / 40% for
+     every lead. Legacy links without mn keep the original behaviour. */
+  var mnRaw = params.get("mn"), exRaw = params.get("ex");
+  var kwjMN = (mnRaw !== null && !isNaN(parseInt(mnRaw,10))) ? parseInt(mnRaw,10) : null;
+  var kwjEX = (exRaw !== null && !isNaN(parseInt(exRaw,10))) ? parseInt(exRaw,10) : null;
   var protRaw = params.get("prot");
   var kwjDur = function(v){ var y=Math.floor(v), m=Math.round((v-y)*12); if(m===12){ y+=1; m=0; } if(y===0&&m===0) return "None"; if(m===0) return y+" yrs"; if(y===0) return m+" mos"; return y+" yrs "+m+" mos"; };
   var yearsRaw    = params.get("y")   || "0";
@@ -598,7 +605,7 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
     "25k-35k": 30000, "35k-50k": 42500, "50k-75k": 62500, "75k-100k": 87500
   };
 
-  var monthlyIncome = incomeTable[incomeKey] || incomeTable[incomeKey.toLowerCase()] || 50000;
+  var monthlyIncome = (kwjMN !== null) ? kwjMN : (incomeTable[incomeKey] || incomeTable[incomeKey.toLowerCase()] || 50000);
   var annualIncome  = monthlyIncome * 12;
 
   // Ã¢ÂÂÃ¢ÂÂ FORMAT HELPERS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
@@ -641,11 +648,17 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
   riskEl.className = "risk-icon " + riskLevel;
 
   document.getElementById("risk-title").textContent = riskLabel;
-  document.getElementById("risk-desc").textContent  = "Based on your income of approx. " + peso(monthlyIncome) + "/mo";
+  document.getElementById("risk-desc").textContent  = (kwjMN !== null
+    ? "Based on the " + peso(monthlyIncome) + "/mo your family would need"
+    : "Based on your income of approx. " + peso(monthlyIncome) + "/mo");
 
   // Show full coverage gap amount
   document.getElementById("stat-gap").textContent = gapAmt > 0 ? peso(gapAmt) : "—";
-  document.getElementById("stat-pct").textContent   = pct + "%";
+  var kwjNeedTotal = (kwjMN !== null && years > 0) ? kwjMN * 12 * years : 0;
+  var kwjRate = (kwjEX !== null && kwjNeedTotal > 0)
+    ? Math.max(0, Math.min(100, Math.round((kwjEX / kwjNeedTotal) * 100)))
+    : null;
+  document.getElementById("stat-pct").textContent   = (kwjRate !== null) ? (kwjRate + "%") : (pct + "%");
   document.getElementById("stat-years").textContent = (protRaw && !isNaN(parseFloat(protRaw))) ? kwjDur(parseFloat(protRaw)) : "—";
 
   // Ã¢ÂÂÃ¢ÂÂ COVERAGE AMOUNTS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
@@ -661,6 +674,8 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
 
   // 1. LIFE INSURANCE
   var hasLife  = has("life");
+  /* KWJ-REALNUM: "covered" must mean the amount held meets the need. */
+  if (kwjEX !== null && kwjMN !== null && years > 0 && kwjEX < kwjMN * 12 * years) hasLife = false;
   var lifeBadge = hasLife ? "have" : "gap";
   cards.push({
     icon: "\uD83D\uDEE1\uFE0F",
@@ -674,7 +689,7 @@ src="https://www.facebook.com/tr?id=2060863387858520&ev=PageView&noscript=1"
     ],
     note: hasLife
       ? "Great. Make sure your beneficiaries and sum assured are updated with your current income level."
-      : "This is your family's income replacement if you pass away. At " + peso(monthlyIncome) + "/mo income, your family needs at least " + peso(lifeStarter) + " to survive the next 5 years.",
+      : "This is your family's income replacement if you pass away. At " + peso(monthlyIncome) + (kwjMN !== null ? "/mo of need, your family needs at least " : "/mo income, your family needs at least ") + peso(lifeStarter) + " to survive the next 5 years.",
     noteClass: hasLife ? "good" : "urgent"
   });
 

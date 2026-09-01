@@ -1581,57 +1581,41 @@
 <script>
 (function(){
   var questions=[
-    {id:"situation",q:"Who are you financially responsible for?",type:"single",options:[
-      {v:"sole",l:"I am the sole breadwinner",s:"My family depends entirely on my income"},
-      {v:"co",l:"I am a co-provider",s:"I share financial responsibility with someone else"},
-      {v:"voluntary",l:"I give support voluntarily",s:"No one fully depends on me, but I help family"},
-      {v:"self",l:"I only support myself",s:"No one else financially depends on me"}
+    {id:"situation",q:"Is anyone depending on your income besides you?",type:"single",options:[
+      {v:"sole",l:"Yes \u2014 I\u2019m the main provider",s:"My family depends mostly on my income"},
+      {v:"co",l:"Yes \u2014 I share it with a partner",s:"We provide for them together"},
+      {v:"voluntary",l:"Not really, but I still help out",s:"No one fully depends on me"},
+      {v:"self",l:"No, it\u2019s just me",s:"No one else depends on my income"}
     ]},
-    {id:"howmany",q:"How many people depend on your income?",type:"single",cond:function(a){return["sole","co"].indexOf(a.situation)>-1;},options:[
-      {v:"1",l:"1 person"},{v:"2-3",l:"2–3 people"},{v:"4-5",l:"4–5 people"},{v:"6+",l:"6 or more"}
+    {id:"howmany",q:"How many depend on you?",type:"single",cond:function(a){return["sole","co"].indexOf(a.situation)>-1;},options:[
+      {v:"1",l:"1 person"},{v:"2-3",l:"2\u20133 people"},{v:"4-5",l:"4\u20135 people"},{v:"6+",l:"6 or more"}
     ]},
-    {id:"income",q:"What is your estimated monthly income?",type:"single",options:[
-      {v:"20k",l:"₱20,000 or less"},{v:"35k",l:"₱20,001 – ₱35,000"},{v:"50k",l:"₱35,001 – ₱50,000"},
-      {v:"75k",l:"₱50,001 – ₱75,000"},{v:"100k",l:"₱75,001 – ₱100,000"},{v:"100k+",l:"₱100,000 and above"}
+    {id:"monthly_need",q:"If your income stopped tomorrow, roughly how much would they need each month?",type:"number",placeholder:"25000",prefix:"\u20b1"},
+    {id:"years",q:"How many more years will they need your financial support?",type:"single",options:[
+      {v:"5",l:"About 5 years"},{v:"10",l:"About 10 years"},{v:"15",l:"About 15 years"},
+      {v:"20",l:"About 20 years"},{v:"25",l:"25 years or more"}
     ]},
-    {id:"pct",q:"How much of your income goes to supporting your family?",type:"slider",min:0,max:100,def:40,unit:"%"},
-    {id:"years",q:"How many more years will they need your financial support?",type:"slider",min:1,max:50,def:10,unit:" years"},
     {id:"coverage",q:"Which of the following do you currently have? (Select all that apply)",type:"multi",options:[
       {v:"none",l:"None at all",excl:true},{v:"life",l:"Life Insurance"},
       {v:"ci",l:"Critical Illness Coverage"},{v:"hmo",l:"HMO / Health Insurance"},
-      {v:"vul",l:"Investment / VUL Plan"},{v:"emergency",l:"Emergency Fund (3–6 months)"}
+      {v:"vul",l:"Investment / VUL Plan"},{v:"emergency",l:"Emergency Fund (3\u20136 months)"}
     ]},
     {id:"life_amount",q:"How much life insurance coverage do you currently have?",type:"single",
      cond:function(a){return a.coverage&&a.coverage.indexOf("life")>-1;},
      options:[
-       {v:"lt500k",l:"Less than ₱500,000"},
-       {v:"500k_1m",l:"₱500,000 – ₱1,000,000"},
-       {v:"1m_2m",l:"₱1,000,000 – ₱2,000,000"},
-       {v:"2m_plus",l:"More than ₱2,000,000"},
-       {v:"unsure",l:"I'm not sure exactly"}
+       {v:"lt500k",l:"Less than \u20b1500,000"},
+       {v:"500k_1m",l:"\u20b1500,000 \u2013 \u20b11,000,000"},
+       {v:"1m_2m",l:"\u20b11,000,000 \u2013 \u20b12,000,000"},
+       {v:"2m_plus",l:"More than \u20b12,000,000"}
      ]},
     {id:"ci_amount",q:"How much critical illness coverage do you currently have?",type:"single",
      cond:function(a){return a.coverage&&a.coverage.indexOf("ci")>-1;},
      options:[
-       {v:"lt500k",l:"Less than ₱500,000"},
-       {v:"500k_1m",l:"₱500,000 – ₱1,000,000"},
-       {v:"1m_2m",l:"₱1,000,000 – ₱2,000,000"},
-       {v:"2m_plus",l:"More than ₱2,000,000"},
-       {v:"unsure",l:"I'm not sure exactly"}
-     ]},
-    {id:"concern",q:"What is your biggest financial concern right now?",type:"single",options:[
-      {v:"sick",l:"Providing for my family if I get sick or injured"},
-      {v:"death",l:"What happens to them if I pass away suddenly"},
-      {v:"savings",l:"I don't have enough savings for emergencies"},
-      {v:"inflation",l:"Rising cost of living / inflation"},
-      {v:"unsure",l:"I'm not sure — that's why I'm here"}
-    ]},
-    {id:"timeline",q:"When you find the right plan, what's your timeline for acting on it?",type:"single",options:[
-      {v:"now",l:"As soon as possible — I'm ready now"},
-      {v:"1-3mo",l:"Within the next 1–3 months"},
-      {v:"6mo",l:"Within the next 6 months"},
-      {v:"exploring",l:"I'm still exploring — no rush"}
-    ]}
+       {v:"lt500k",l:"Less than \u20b1500,000"},
+       {v:"500k_1m",l:"\u20b1500,000 \u2013 \u20b11,000,000"},
+       {v:"1m_2m",l:"\u20b11,000,000 \u2013 \u20b12,000,000"},
+       {v:"2m_plus",l:"More than \u20b12,000,000"}
+     ]}
   ];
 
   var gcStep=0,gcAnswers={},gcSliderVals={pct:40,years:10},gcOtpCode="",gcEmailVerified=true,gcStartedFired=false;
@@ -1698,6 +1682,12 @@
           +marker+"<div><div>"+o.l+"</div>"+(o.s?"<div style=\"font-size:12px;color:var(--gray);font-weight:400;margin-top:2px\">"+o.s+"</div>":"")+"</div></button>";
       }
       html+="</div>";
+    }else if(q.type==="number"){
+      var nv=(gcAnswers[q.id]!==undefined&&gcAnswers[q.id]!==null)?gcAnswers[q.id]:"";
+      html+="<div class=\"gc-field\" style=\"margin-top:10px\"><div style=\"display:flex;align-items:center;gap:10px\">"
+        +"<span style=\"font-size:22px;font-weight:700\">"+(q.prefix||"")+"</span>"
+        +"<input type=\"number\" inputmode=\"numeric\" id=\"gc-num-"+q.id+"\" class=\"lead-input\" placeholder=\""+(q.placeholder||"")+"\" value=\""+nv+"\" oninput=\"gcNum('"+q.id+"',this.value)\" style=\"font-size:20px;font-weight:600\">"
+        +"</div><div style=\"font-size:12px;color:var(--gray);margin-top:8px\">A rough figure is fine.</div></div>";
     }else if(q.type==="slider"){
       var val=gcSliderVals[q.id]!==undefined?gcSliderVals[q.id]:q.def;
       gcAnswers[q.id]=val;
@@ -1708,29 +1698,45 @@
     var isLast=idx===total-1;
     html+="<div class=\"calc-nav\">"
       +(gcStep>0?"<button class=\"btn-back\" onclick=\"gcBack()\">\u2190 Back</button>":"<span></span>")
-      +"<button class=\"btn-next\" id=\"gc-btn-next\" onclick=\"gcNext()\""+((!gcAnswers[q.id]&&q.type==="single")?" disabled":"")+">"
+      +"<button class=\"btn-next\" id=\"gc-btn-next\" onclick=\"gcNext()\""+((!gcAnswers[q.id]&&(q.type==="single"||q.type==="number"))?" disabled":"")+">"
       +(isLast?"Continue to your details":"Next")+" <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" fill=\"none\"><path d=\"M3 8h10M9 4l4 4-4 4\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></button></div>";
     return html;
   }
 
   function gcPersonalForm(){
-    return "<div class=\"q-number\">Final step</div>"
-      +"<div class=\"q-text\">Let\u2019s personalize your results</div>"
-      +"<div class=\"q-sub\">Your information is private and only used to prepare your coverage report.</div>"
+    var cov=gcAnswers.coverage||[];
+    var has=(cov.indexOf("none")>=0)?[]:cov;
+    var order=["life","ci","hmo","vul","emergency"];
+    var names={life:"Income replacement",ci:"Critical illness",hmo:"Health cover",vul:"Long-term savings",emergency:"Emergency fund"};
+    var gapN=order.filter(function(b){return has.indexOf(b)<0;}).length;
+    var chips=order.map(function(b){
+      var missing=has.indexOf(b)<0;
+      return "<span style=\"display:inline-block;padding:6px 11px;margin:3px 5px 3px 0;border-radius:14px;font-size:12.5px;font-weight:600;"
+        +(missing?"background:#FEE2E2;color:#B91C1C":"background:#F0FFF4;color:#15803D")+"\">"+names[b]+"</span>";
+    }).join("");
+    return "<div class=\"q-number\">Your result</div>"
+      +"<div class=\"q-text\">You have gaps in "+gapN+" of your 5 protection areas.</div>"
+      +"<div style=\"margin:12px 0 16px\">"+chips+"</div>"
+      +"<div class=\"q-sub\">Want the full breakdown \u2014 how much each gap is worth, and which to close first?</div>"
       +"<div class=\"gc-form-grid\">"
-      +"<div class=\"gc-field\"><label class=\"gc-label\">First Name</label><input type=\"text\" id=\"gc-fname\" placeholder=\"Juan\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"></div>"
-      +"<div class=\"gc-field\"><label class=\"gc-label\">Last Name</label><input type=\"text\" id=\"gc-lname\" placeholder=\"dela Cruz\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"></div>"
-      +"<div class=\"gc-field\"><label class=\"gc-label\">Date of Birth</label><input type=\"date\" id=\"gc-dob\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"></div>"
-      +"<div class=\"gc-field\"><label class=\"gc-label\">Contact Number</label><input type=\"tel\" id=\"gc-phone\" placeholder=\"+63 9XX XXX XXXX\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"></div>"
+      +"<div class=\"gc-field\"><label class=\"gc-label\">How should I call you?</label><input type=\"text\" id=\"gc-fname\" placeholder=\"Juno\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"></div>"
+      +"<div class=\"gc-field\"><label class=\"gc-label\">Age</label><input type=\"number\" inputmode=\"numeric\" id=\"gc-age\" placeholder=\"38\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"></div>"
       +"<div class=\"gc-field gc-full\"><label class=\"gc-label\">Email Address</label>"
-      +"<div style=\"font-size:12px;color:var(--gray);margin:2px 0 4px\">Your coverage gap report will be sent here</div>"
+      +"<div style=\"font-size:12px;color:var(--gray);margin:2px 0 4px\">Your full report will be sent here</div>"
       +"<input type=\"email\" id=\"gc-email\" placeholder=\"juan@email.com\" class=\"lead-input\" oninput=\"gcCheckPersonal()\"><div id=\"gc-email-error\" style=\"display:none;color:#c0392b;font-size:11px;margin-top:4px;\">Please enter a valid email address (e.g. juan@email.com).</div></div>"
       +"</div>"
       +"<div class=\"calc-nav\" style=\"margin-top:16px\">"
       +"<button class=\"btn-back\" onclick=\"gcBackPersonal()\">\u2190 Back</button>"
-      +"<button class=\"btn-next\" id=\"gc-btn-submit\" disabled onclick=\"gcShowComputing()\">See my results <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" fill=\"none\"><path d=\"M3 8h10M9 4l4 4-4 4\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></button>"
+      +"<button class=\"btn-next\" id=\"gc-btn-submit\" disabled onclick=\"gcShowComputing()\">Send me my full report <svg width=\"14\" height=\"14\" viewBox=\"0 0 16 16\" fill=\"none\"><path d=\"M3 8h10M9 4l4 4-4 4\" stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></button>"
       +"</div>";
   }
+
+  window.gcNum=function(qid,val){
+    var n=parseInt(String(val).replace(/[^0-9]/g,""),10);
+    gcAnswers[qid]=(n&&n>0)?n:undefined;
+    var btn=document.getElementById("gc-btn-next");
+    if(btn)btn.disabled=!gcAnswers[qid];
+  };
 
   window.gcPick=function(el){
     var container=el.closest(".gc-opts");
@@ -1780,10 +1786,15 @@
   };
 
   window.gcCheckPersonal=function(){
-    var f=document.getElementById("gc-fname"),l=document.getElementById("gc-lname"),
-        d=document.getElementById("gc-dob"),p=document.getElementById("gc-phone"),
-        e=document.getElementById("gc-email"),btn=document.getElementById("gc-btn-submit");
-    var gcEmailOk=e&&e.value&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.value.trim());var gcErrEl=document.getElementById("gc-email-error");if(gcErrEl)gcErrEl.style.display=(e&&e.value&&!gcEmailOk)?"block":"none";if(btn)btn.disabled=!(f&&f.value&&l&&l.value&&d&&d.value&&p&&p.value&&gcEmailOk);
+    var f=document.getElementById("gc-fname"),
+        a=document.getElementById("gc-age"),
+        e=document.getElementById("gc-email"),
+        btn=document.getElementById("gc-btn-submit");
+    var gcEmailOk=e&&e.value&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.value.trim());
+    var gcErrEl=document.getElementById("gc-email-error");
+    if(gcErrEl)gcErrEl.style.display=(e&&e.value&&!gcEmailOk)?"block":"none";
+    var ageOk=a&&a.value&&Number(a.value)>0&&Number(a.value)<110;
+    if(btn)btn.disabled=!(f&&f.value.trim()&&ageOk&&gcEmailOk);
   };
 
   window.gcSendOTP=function(){
@@ -1827,7 +1838,7 @@
     }
   };
 
-  var gcCapturedFname="",gcCapturedLname="",gcCapturedEmail="",gcCapturedPhone="",gcCapturedDob="";
+  var gcCapturedFname="",gcCapturedLname="",gcCapturedEmail="",gcCapturedPhone="",gcCapturedDob="",gcCapturedAge="";
   window.gcShowComputing=function(){
     var body=document.getElementById("gc-body");
     if(!body)return;
@@ -1836,6 +1847,7 @@
     gcCapturedEmail=(document.getElementById("gc-email")||{}).value||"";
     gcCapturedPhone=(document.getElementById("gc-phone")||{}).value||"";
     gcCapturedDob=(document.getElementById("gc-dob")||{}).value||"";
+    gcCapturedAge=(document.getElementById("gc-age")||{}).value||"";
     gcAmReady=false;
     if(gcCapturedEmail){
       var _emailNorm=gcCapturedEmail.trim().toLowerCase();
@@ -1880,11 +1892,9 @@
     var fname=gcCapturedFname||"there";
     var userEmail=gcCapturedEmail;
     var userPhone=gcCapturedPhone;
-    var incMap={"20k":17500,"35k":27500,"50k":42500,"75k":62500,"100k":87500,"100k+":125000};
-    var income=incMap[gcAnswers.income]||50000;
-    var pct=(gcAnswers.pct||40)/100;
-    var yrs=gcAnswers.years||10;
-    var totalNeed=income*pct*12*yrs;
+    var monthlyNeed=Number(gcAnswers.monthly_need)||0;
+    var yrs=Number(gcAnswers.years)||10;
+    var totalNeed=monthlyNeed*12*yrs;
     var covMap={life:1000000,ci:500000,hmo:200000,vul:750000,emergency:300000};
     var existing=0;
     var cov=gcAnswers.coverage||[];
@@ -1901,7 +1911,7 @@
         }
         if (existing < 0) existing = 0;
       })();
-    var annualNeed = income*pct*12;
+    var annualNeed = monthlyNeed*12;
       var yrsN       = Number(yrs) || 0;
       var protYears  = annualNeed>0 ? Math.max(0, existing/annualNeed) : 0;
       var shortYears = Math.max(0, yrsN - protYears);
@@ -2047,7 +2057,7 @@
         body:JSON.stringify({
           fb_event_id:          _leadEid,          first_name:           fname,
           last_name:            lname,
-          name:                 fname+" "+lname,
+          name:                 (fname+" "+lname).trim(),
           email:                userEmail,
           phone:                userPhone,
           date_of_birth:        dob,
@@ -2058,14 +2068,16 @@
           gap_count:            gapCount,
           situation:            gcAnswers.situation     || "—",
           dependents:           gcAnswers.howmany       || "—",
-          monthly_income:       gcAnswers.income        || "—",
-          income_pct_to_family: String(gcAnswers.pct||40)+"%",
+          monthly_income:       "",
+          income_pct_to_family: "",
+          monthly_need:         String(monthlyNeed),
+          age:                  gcCapturedAge,
           years_of_support:     String(gcAnswers.years||10),
           current_coverage:     (gcAnswers.coverage||[]).join(", ")||"None",
           life_amount:          gcAnswers.life_amount   || "not answered",
           ci_amount:            gcAnswers.ci_amount     || "not answered",
-          biggest_concern:      gcAnswers.concern       || "—",
-          timeline:             gcAnswers.timeline      || "—",
+          biggest_concern:      "",
+          timeline:             "",
           years_protected_text: protText,
           years_protected_next: protNext,
           years_shortfall:      shortYears.toFixed(1),
@@ -2182,67 +2194,6 @@
   install();
 })();
 </script>
-<!-- KWJ-FORM-4FIELD -->
-<script>
-(function(){
- function wrap(id){ var e=document.getElementById(id); return (e&&e.parentElement&&e.parentElement.tagName==="DIV")?e.parentElement:null; }
- function check(){
-  var f=document.getElementById("gc-fname"), l=document.getElementById("gc-lname"),
-      d=document.getElementById("gc-dob"), e=document.getElementById("gc-email"),
-      b=document.getElementById("gc-btn-submit");
-  if(!b) return;
-  var val=((e&&e.value)||"").trim();
-  var ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-  var err=document.getElementById("gc-email-error");
-  if(err) err.style.display=(val && !ok) ? "" : "none";
-  b.disabled=!(f&&f.value.trim() && l&&l.value.trim() && d&&d.value && ok);
- }
- function buildDob(){
-  var d=document.getElementById("gc-dob");
-  if(!d || d.__kwjDob) return;
-  d.__kwjDob=1;
-  var ref=document.getElementById("gc-email");
-  var cs=ref?window.getComputedStyle(ref):null;
-  var css="flex:1;min-width:0;"+(cs?("padding:"+cs.padding+";border:"+cs.border+";border-radius:"+cs.borderRadius+";font-size:"+cs.fontSize+";color:"+cs.color+";background:"+cs.backgroundColor+";font-family:"+cs.fontFamily+";"):"");
-  function mk(ph,opts){
-   var s=document.createElement("select"); s.style.cssText=css;
-   var z=document.createElement("option"); z.value=""; z.textContent=ph; s.appendChild(z);
-   opts.forEach(function(o){ var x=document.createElement("option"); x.value=o[0]; x.textContent=o[1]; s.appendChild(x); });
-   return s;
-  }
-  function pad(n){ return (n<10?"0":"")+n; }
-  var M=["January","February","March","April","May","June","July","August","September","October","November","December"];
-  var mo=[], da=[], yr=[], i, now=new Date().getFullYear();
-  for(i=0;i<12;i++) mo.push([pad(i+1),M[i]]);
-  for(i=1;i<=31;i++) da.push([pad(i),String(i)]);
-  for(i=now-18;i>=now-80;i--) yr.push([String(i),String(i)]);
-  var mm=mk("Month",mo), dd=mk("Day",da), yy=mk("Year",yr);
-  var host=document.createElement("div");
-  host.style.cssText="display:flex;gap:8px;width:100%;";
-  host.appendChild(mm); host.appendChild(dd); host.appendChild(yy);
-  d.type="hidden";
-  d.parentNode.insertBefore(host, d.nextSibling);
-  function sync(){
-   d.value=(yy.value&&mm.value&&dd.value)?(yy.value+"-"+mm.value+"-"+dd.value):"";
-   check();
-  }
-  [mm,dd,yy].forEach(function(x){ x.addEventListener("change",sync); });
- }
- function apply(){
-  if(!document.getElementById("gc-fname")) return false;
-  var p=wrap("gc-phone"); if(p) p.style.display="none";
-  var l=wrap("gc-lname"); if(l) l.style.display="";
-  buildDob();
-  window.gcCheckPersonal=check;
-  ["gc-fname","gc-lname","gc-email"].forEach(function(id){
-   var el=document.getElementById(id);
-   if(el && !el.__kwjBound){ el.__kwjBound=1; el.addEventListener("input",check); el.addEventListener("change",check); }
-  });
-  check();
-  return true;
- }
- var n=0, t=setInterval(function(){ n++; if(apply()||n>200) clearInterval(t); },300);
-})();
-</script>
+
 </body>
 </html>

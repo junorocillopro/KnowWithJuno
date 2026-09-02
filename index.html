@@ -2169,7 +2169,7 @@
 <script>
 /* kwjQuizEvents - Clarity funnel instrumentation. Observation only. */
 (function kwjQuizEvents(){
-  var qn=0, started=false, done=false, details=false;
+  var qn=0, started=false, done=false, details=false, submitted=false, revealSeen=false;
   function ev(n){ try{ if(window.clarity) window.clarity("event", n); }catch(e){} }
   function wrap(name, cb){
     /* KWJ-WRAPONCE: the marker must live in a shared registry, not on the
@@ -2184,13 +2184,35 @@
   }
   function install(){
     var a=wrap("gcPick", function(){ if(!started){ started=true; ev("quiz_start"); } });
-    var b=wrap("gcNext", function(){ if(!started){ started=true; ev("quiz_start"); } qn++; if(qn<=12) ev("quiz_q"+qn); });
+    var b=wrap("gcNext", function(){ if(!started){ started=true; ev("quiz_start"); } qn++; if(qn<=7) ev("quiz_q"+qn); });
     var c=wrap("gcCheckPersonal", function(){ if(!details){ details=true; ev("quiz_details"); } });
+    var d=wrap("gcShowComputing", function(){ if(!submitted){ submitted=true; ev("gap_reveal_submit"); } });
     var e=wrap("gcShowResults", function(){ if(!done){ done=true; ev("quiz_complete"); } });
-    return a||b||c||e;
+    return a||b||c||d||e;
   }
-  var n=0, t=setInterval(function(){ n++; if(install()||n>40) clearInterval(t); }, 250);
-  install();
+  /* KWJ-REVEAL: the gap reveal shares a screen with the capture form and is
+     rendered by a non-global function, so watch for its unique field instead.
+     gap_reveal_shown vs gap_reveal_submit is the drop-off the redesign exists
+     to move — without it we cannot tell whether the reveal helps or hurts. */
+  function checkReveal(){
+    if(revealSeen) return;
+    if(document.getElementById("gc-fname")){ revealSeen=true; ev("gap_reveal_shown"); }
+  }
+  function watchReveal(){
+    var host=document.getElementById("gc-body");
+    if(!host || !window.MutationObserver) return false;
+    new MutationObserver(checkReveal).observe(host,{childList:true,subtree:true});
+    checkReveal();
+    return true;
+  }
+  var watching=watchReveal();
+  var installedOnce=install();
+  var n=0, t=setInterval(function(){
+    n++;
+    if(!watching) watching=watchReveal();
+    if(install()) installedOnce=true;
+    if((installedOnce && watching) || n>40) clearInterval(t);
+  }, 250);
 })();
 </script>
 
